@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-#RSpec.describe QuestionsController, :type => :controller do
 describe QuestionsController do
   describe "GET #index" do
     let(:questions) { create_list(:question, 2) }
