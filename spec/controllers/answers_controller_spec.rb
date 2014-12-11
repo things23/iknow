@@ -1,9 +1,18 @@
 require 'rails_helper'
 
 describe AnswersController do
-  describe "GET #new" do
-    let(:question) { create(:question) }
+  let(:question) { create(:question) }
 
+  describe "GET #show" do
+    let(:answer) { create(:answer, question_id: question.id) }
+
+    before { get :show, question_id: question, id: answer }
+    it "assigns the requested answer to @answer" do
+      expect(assigns(:answer)).to eq answer
+    end
+  end
+
+  describe "GET #new" do
     before { get :new, question_id: question }
     it "assigns a new Answer to @answer" do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -15,7 +24,6 @@ describe AnswersController do
   end
 
   describe "POST #create" do
-    let(:question) { create(:question) }
     context "with valid attributes" do
       it "saves the new answer to the databse" do
         expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)

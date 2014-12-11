@@ -1,6 +1,10 @@
 class AnswersController < ApplicationController
   before_action :find_question
 
+  def show
+    @answer = @question.answers.find(params[:id])
+  end
+
   def new
     @answer = @question.answers.new
   end
