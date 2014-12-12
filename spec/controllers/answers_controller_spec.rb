@@ -17,11 +17,11 @@ describe AnswersController do
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new answer to the databse" do
-        expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
+        expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(question.answers, :count).by(1)
       end
       it "redirects to related questions show view" do
         post :create, question_id: question, answer: attributes_for(:answer)
-        expect(response).to redirect_to question_path(assigns(:answer).question)
+        expect(response).to redirect_to question_path(question)
       end
     end
 
