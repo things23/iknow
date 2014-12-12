@@ -1,0 +1,11 @@
+div class="question"
+h2
+  = @question.title
+p
+  = @question.body
+= link_to "Your Answer", new_question_answer_path(@question)
+hr
+- if @question.answers.any?
+  h3 Answers
+  div class="answers"
+    = render @question.answers

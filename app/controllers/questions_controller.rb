@@ -14,8 +14,10 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(questions_params)
     if @question.save
+      flash[:notice] = "Question created"
       redirect_to @question
     else
+      flash[:notice] = "Invalid title or body"
       render 'new'
     end
   end
