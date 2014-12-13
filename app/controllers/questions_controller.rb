@@ -2,18 +2,22 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: :show
   def index
-    @questions = Question.all
+    if current_user
+      @questions = current_user.questions
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def show
   end
 
   def new
-    @question = Question.new
+    @question = current_user.questions.new
   end
 
   def create
-    @question = Question.new(questions_params)
+    @question = current_user.questions.new(questions_params)
     if @question.save
       flash[:notice] = "Question created"
       redirect_to @question
@@ -26,7 +30,7 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
   end
 
   def questions_params
