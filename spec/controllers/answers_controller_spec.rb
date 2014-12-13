@@ -1,16 +1,9 @@
 require 'rails_helper'
 
 describe AnswersController do
-  let(:question) { create(:question) }
-
-  describe "GET #show" do
-    let(:answer) { create(:answer, question_id: question.id) }
-
-    before { get :show, question_id: question, id: answer }
-    it "assigns the requested answer to @answer" do
-      expect(assigns(:answer)).to eq answer
-    end
-  end
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user_id: user.id) }
+  before { sign_in user }
 
   describe "GET #new" do
     before { get :new, question_id: question }

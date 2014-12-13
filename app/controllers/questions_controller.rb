@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: :show
   def index
     if current_user
-      @questions = current_user.questions
+      @questions = Question.all
     else
       redirect_to new_user_session_path
     end
@@ -18,6 +18,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(questions_params)
+
     if @question.save
       flash[:notice] = "Question created"
       redirect_to @question
@@ -30,7 +31,7 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = current_user.questions.find(params[:id])
+    @question = Question.find(params[:id])
   end
 
   def questions_params

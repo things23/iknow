@@ -2,16 +2,12 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question
 
-  def show
-    @answer = @question.answers.find(params[:id])
-  end
-
   def new
     @answer = @question.answers.new
   end
 
   def create
-    @answer = @question.answers.new(answers_params)
+    @answer = @question.answers.new(answers_params.merge(user: current_user))
     if @answer.save
       redirect_to @question
     else
