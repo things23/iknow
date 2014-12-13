@@ -2,11 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: :show
   def index
-    if current_user
       @questions = Question.all
-    else
-      redirect_to new_user_session_path
-    end
   end
 
   def show
