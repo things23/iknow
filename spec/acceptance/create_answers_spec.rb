@@ -1,7 +1,7 @@
-require "rails_helper"
+require_relative "acceptance_helper"
 
 feature "Create answer", %q{
-  In order to help member of community to solve problem
+  In order to help a member of community to solve problem
   As an user
   I want to be able to create answer
 } do
@@ -9,16 +9,26 @@ feature "Create answer", %q{
   given(:user) { create(:user) }
   let!(:question) { create(:question, user_id: user.id) }
 
-  scenario "Authenticated user create answer" do
+  scenario "Authenticated user create answer", js: true do
     sign_in(user)
-
     visit question_path(question)
-    click_on "Your Answer"
-    fill_in "Body", with: "Body"
+
+
+    fill_in "Your Answer", with: "My answer"
     click_on "Post Your Answer"
 
-    expect(page).to have_content "Answer was successfully created"
     expect(current_path).to eq question_path(question)
+    within ".answers" do
+      expect(page).to have_content "My answer"
+    end
+  end
+
+  scenario "User try to create invalid answer", js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    click_on "Post Your Answer"
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario "Non-authenticated user tries to create answer " do

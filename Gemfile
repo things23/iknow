@@ -24,6 +24,7 @@ group :test do
   gem 'shoulda-matchers', '~> 2.7.0'
   gem 'capybara', '~> 2.4.4'
   gem 'launchy', '~> 2.4.3'
+  gem 'poltergeist', '~> 1.5.1'
 end
 
 

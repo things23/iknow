@@ -1,4 +1,4 @@
-require "rails_helper"
+require_relative "acceptance_helper"
 
 feature "Edit answer", %q{
   In order to fix mistakes in my answers
