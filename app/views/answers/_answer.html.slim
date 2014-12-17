@@ -3,3 +3,10 @@ div class="answer"
     = answer.body
   cite
     = answer.user.email
+  ul
+    - if answer.user == current_user
+      li
+        = link_to "Edit Answer", edit_answer_path(answer)
+      li
+        = link_to "Delete Answer", answer, method: :delete, data: { confirm: 'Are you sure?'}
+

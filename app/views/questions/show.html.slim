@@ -1,10 +1,16 @@
 div class="question"
-h2
-  = @question.title
-p
-  = @question.body
-= link_to "Your Answer", new_question_answer_path(@question)
-hr
+  h2
+    = @question.title
+  p
+    = @question.body
+    ul
+      li
+        = link_to "Your Answer", new_question_answer_path(@question)
+      - if @question.user == current_user
+        li
+          = link_to "Edit", edit_question_path(@question)
+        li
+          = link_to "Delete", @question, method: :delete, data: { confirm: 'Are you sure?'}
 - if @question.answers.any?
   h3 Answers
   div class="answers"

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe QuestionsController do
-  let(:user) { create(:user) }
-  before { sign_in user }
+  sign_in_user
+  let(:question) { create(:question, user_id: @user.id) }
 
   describe "GET #index" do
-    let(:questions) { create_list(:question, 2, user_id: user.id) }
+    let(:questions) { create_list(:question, 2) }
 
-    before { get :index, user_id: user }
+    before { get :index}
 
     it "populates an array of all questions" do
       expect(assigns(:questions)).to match_array(questions)
@@ -19,9 +19,8 @@ describe QuestionsController do
   end
 
   describe "GET #show" do
-    let(:question) { create(:question, user_id: user.id) }
 
-    before { get :show, user_id: user, id: question }
+    before { get :show, id: question }
 
     it "assigns the requested question to @question" do
       expect(assigns(:question)).to eq question
@@ -33,7 +32,7 @@ describe QuestionsController do
   end
 
   describe "GET #new" do
-    before { get :new, user_id: user.id }
+    before { get :new }
 
     it "assigns a new Question to @question" do
       expect(assigns(:question)).to be_a_new(Question)
@@ -47,11 +46,11 @@ describe QuestionsController do
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new question in the database" do
-        expect { post :create, user_id: user.id, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { post :create, user_id: @user.id, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
 
       it "redirects to show view" do
-        post :create, user_id: user.id, question: attributes_for(:question)
+        post :create, user_id: @user.id, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
@@ -65,6 +64,63 @@ describe QuestionsController do
         post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
+    end
+  end
+
+  describe "GET #edit" do
+    before { get :edit, id: question }
+
+    it "assigns requested question to @question" do
+      expect(assigns(:question)).to eq question
+    end
+
+    it "renders edit view" do
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe "PATCH #update" do
+    context "with valid attributes" do
+      it "assigns requested question to @question" do
+        patch :update, id: question, question: attributes_for(:question)
+        expect(assigns(:question)).to eq question
+      end
+      it "changes question attributes" do
+        patch :update, id: question, question: {title: "new title", body: "new body" }
+        question.reload
+        expect(question.title).to eq "new title"
+        expect(question.body).to eq "new body"
+      end
+
+      it "redirects to updated question" do
+        patch :update, id: question, question: attributes_for(:question)
+        expect(response).to redirect_to question
+      end
+    end
+
+    context "with invalid attributes" do
+      before {  patch :update, id: question, question: { title: "new title", body: nil } }
+      it "does not change questions attributes" do
+        question.reload
+        expect(question.title).to eq "MyQuestion"
+        expect(question.body).to eq "Body of my question"
+      end
+
+      it "re-enders edit view" do
+        expect(response).to render_template :edit
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    before { question }
+    it "deletes question " do
+      expect{ delete :destroy, user_id: @user.id, id: question }.to change(Question, :count).by(-1)
+    end
+
+    it "redirect to index view" do
+      delete :destroy, user_id: @user.id, id: question
+      expect(response).to redirect_to root_path
     end
   end
 end
