@@ -42,31 +42,24 @@ describe AnswersController do
   describe "PATCH #update" do
     context "with valid attributes" do
       it "assigns requested answer to @answer" do
-        patch :update, id: answer, answer: attributes_for(:answer)
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
         expect(assigns(:answer)).to eq answer
       end
 
+      it "assigns the question" do
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        expect(assigns(:question)).to eq question
+      end
+
       it "changes answers attributes" do
-        patch :update, id: answer, answer: { body: "new body" }
+        patch :update, id: answer, answer: { body: "new body" }, format: :js
         answer.reload
         expect(answer.body).to eq "new body"
       end
 
-      it "redirects to related question" do
-        patch :update, id: answer, answer: attributes_for(:answer)
-        expect(response).to redirect_to question
-      end
-    end
-
-    context "with invalid attributes" do
-      before { patch :update, id: answer, answer: { body: nil } }
-      it "does not changes answers attributes" do
-        answer.reload
-        expect(answer.body).to eq "MyText"
-      end
-
-      it "re-enders edit view" do
-        expect(response).to render_template :edit
+      it "render update template" do
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
       end
     end
   end

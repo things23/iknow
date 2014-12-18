@@ -13,7 +13,9 @@ feature "Delete answer", %q{
     sign_in(user)
 
     visit question_path(question)
-    click_on "Delete Answer"
+    within ".answers" do
+      click_on "Delete"
+    end
 
     expect(page).to have_content "Answer was successfully deleted"
     expect(current_path).to eq question_path(question)

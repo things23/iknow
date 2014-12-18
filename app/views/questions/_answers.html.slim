@@ -1,11 +1,12 @@
 - @question.answers.each do |answer|
-  blockquote
-    = answer.body
-  cite
-    = answer.user_id
-  ul
-    - if answer.user == current_user
-      li
-        = link_to "Edit Answer", edit_answer_path(answer)
-      li
-        = link_to "Delete Answer", answer, method: :delete, data: { confirm: 'Are you sure?'}
+  - if answer.persisted?
+    blockquote= answer.body
+    cite= answer.user.email
+    - if user_signed_in? && answer.user == current_user
+      p= link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
+      p
+        = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+          = f.label :body, "Answer"
+          = f.text_area :body
+          = f.submit "Save", class: "btn btn-primary"
+      p= link_to "Delete", answer, method: :delete, data: { confirm: 'Are you sure?'}

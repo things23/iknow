@@ -14,11 +14,11 @@
   h3 Answers
   .answers
     = render "answers"
-
-= form_for [@question, @answer], remote: true do |f|
-  = f.label :body, "Your Answer"
-  .answer-errors
-  = f.text_area :body
-  = f.submit "Post Your Answer"
+-if user_signed_in?
+  = form_for [@question, @answer], remote: true do |f|
+    = f.label :body, "Your Answer"
+    .answer-errors
+    = f.text_area :body
+    = f.submit "Post Your Answer"
 
 

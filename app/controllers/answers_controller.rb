@@ -11,12 +11,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answers_params)
-      flash[:notice] = "Answer was successfully updated"
-      redirect_to @answer.question
-    else
-      render "edit"
-    end
+    @answer.update(answers_params)
+    @question = @answer.question
   end
 
   def destroy
