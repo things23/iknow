@@ -1,24 +1,13 @@
 .question
-  h2
-    = @question.title
-  p
-    = @question.body
-    ul
-    - if @question.user == current_user
-      li
-        = link_to "Edit", edit_question_path(@question)
-      li
-        = link_to "Delete", @question, method: :delete, data: { confirm: 'Are you sure?'}
-
+  = render "questions"
 - if @question.answers.any?
-  h3 Answers
   .answers
     = render "answers"
--if user_signed_in?
-  = form_for [@question, @answer], remote: true do |f|
-    = f.label :body, "Your Answer"
-    .answer-errors
-    = f.text_area :body
-    = f.submit "Post Your Answer"
+    - if user_signed_in?
+      = form_for [@question, @answer], remote: true do |f|
+        = f.label :body, "Your Answer"
+        .answer-errors
+        = f.text_area :body
+        = f.submit "Post Your Answer"
 
 

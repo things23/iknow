@@ -1,4 +1,4 @@
-require_relative "acceptance_helper"
+require_relative "../acceptance_helper"
 
 feature "User sign out", %q{
   In order to destroy my sessions
@@ -15,6 +15,8 @@ feature "User sign out", %q{
 
     expect(page).to have_content("Signed out successfully.")
     expect(current_path).to eq root_path
-  end
 
+    visit new_question_path
+    expect(current_path).to eq new_user_session_path
+  end
 end

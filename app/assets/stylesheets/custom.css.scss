@@ -61,20 +61,42 @@ input {
 }
 
 /* questions */
-.questions {
-  margin-top: 30px;
-  width: 8x00px;
-  .question {
-    margin-top: 20px;
-    border-bottom: 1px solid #A9A9A9
+.questions-list {
+  margin-top: 5px;
+  width: 900px;
+  margin: 0 auto;
+}
+.question {
+  width: 900px;
+  margin: 0 auto;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #A9A9A9;
+  ul {
+    li {
+      margin-right: 15px;
+      display: inline;
+      list-style-type: none;
+    }
   }
 }
+.edit_question { display: none }
 
 /* answers */
 .answers {
-  width: 600px;
-  .answer {
-    border-bottom: 1px solid #A9A9A9
+  width: 900px;
+  border-bottom: 1px solid #A9A9A9;
+  margin: 0 auto;
+  .edit_answer { display: none }
+}
+.answer {
+  background-color: #FFFFF0;
+;
+  margin-bottom: 25px;
+  ul {
+    li {
+      margin-right: 15px;
+      display: inline;
+      list-style-type: none;
+    }
   }
 }
-.edit_answer { display: none}

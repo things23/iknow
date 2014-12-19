@@ -1,5 +1,5 @@
-div class="container"
-  div class="questions"
+.container
+  .questions-list
     - @questions.each do|question|
-      div class= "question"
+      .question
         = link_to "#{question.title}" , question

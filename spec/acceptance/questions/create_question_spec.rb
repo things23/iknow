@@ -1,4 +1,4 @@
-require_relative "acceptance_helper"
+require_relative "../acceptance_helper"
 
 feature "Create question", %q{
   In order to get answer from community
@@ -17,7 +17,8 @@ feature "Create question", %q{
     fill_in "Body", with: "textext"
     click_on "Create question"
 
-    expect(page).to have_content "Question created"
+    expect(page).to have_content "Test?"
+    expect(page).to have_content "textext"
     expect(current_path).to eq question_path(Question.last.id)
   end
 

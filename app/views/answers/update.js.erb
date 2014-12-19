@@ -4,7 +4,7 @@
     <% end %>
 <% else %>
     $('.answers').html('<%= j render 'questions/answers' %>');
-        $('.edit-answer-link').on('click', function(event) {
+    $('.edit-answer-link').on('click', function(event) {
         event.preventDefault();
         $(this).hide();
         var answer_id = $(this).data('answerId');

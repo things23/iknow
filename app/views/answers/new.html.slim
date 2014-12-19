@@ -1,8 +1,0 @@
-- if flash[:notice]
-    div class="notice" = flash[:notice]
-div class = "row"
-  div class="col-md-6 col-md-offset-3"
-    = form_for [@question, @answer] do |f|
-      = f.label :body
-      = f.text_area :body
-      = f.submit "Post Your Answer", class: "btn btn-primary"

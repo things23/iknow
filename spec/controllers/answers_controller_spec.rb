@@ -2,40 +2,33 @@ require 'rails_helper'
 
 describe AnswersController do
   sign_in_user
-  let(:question) { create(:question, user_id: @user.id) }
-  let(:answer) { create(:answer, user_id: @user.id, question_id: question.id) }
+  #убрать везде user_id и тд user: user
+  # убрать user_id: @user.id из параметров
+  # пытаемся удалить чужой ответ, видим что-то
+  let(:question) { create(:question, user: @user) }
+  let(:answer) { create(:answer, user: @user, question: question) }
 
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new answer to the databse" do
-        expect { post :create, user_id: @user.id, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
+        expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
       end
 
       it "render create template" do
-        post :create, user_id: @user.id, question_id: question, answer: attributes_for(:answer), format: :js
+        post :create, question_id: question, answer: attributes_for(:answer), format: :js
         expect(response).to render_template :create
       end
     end
 
     context "with invalid attributes" do
       it "does not save the answer" do
-        expect { post :create, user_id: @user.id, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
+        expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
       end
 
       it "renders new view" do
-        post :create, user_id: @user.id, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
         expect(response).to render_template :create
       end
-    end
-  end
-
-  describe "GET #edit" do
-    before { get :edit, id: answer }
-    it "assigns requested answer to @answer" do
-      expect(assigns(:answer)).to eq answer
-    end
-    it "renders edit view" do
-      expect(response).to render_template :edit
     end
   end
 
@@ -62,6 +55,14 @@ describe AnswersController do
         expect(response).to render_template :update
       end
     end
+
+    context "update another users answer" do
+      sign_in_another_user
+
+      it "raises an error" do
+        expect { patch :update, id: answer, answer: { body: "new new body" }, format: :js }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 
   describe "DELETE #destroy" do
@@ -70,8 +71,16 @@ describe AnswersController do
       expect{ delete :destroy, id: answer }.to change(Answer, :count).by(-1)
     end
     it "redirects to root_path" do
-      delete :destroy, user_id: @user.id, id: answer
+      delete :destroy, id: answer
       expect(response).to redirect_to question_path(question)
+    end
+
+    context "delete another users answer" do
+      sign_in_another_user
+
+      it "raises an error" do
+        expect { delete :destroy, id: answer }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

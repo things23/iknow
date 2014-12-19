@@ -1,4 +1,4 @@
-require_relative "acceptance_helper"
+require_relative "../acceptance_helper"
 
 feature "Delete answer", %q{
   In order to fix my mistake
@@ -6,8 +6,8 @@ feature "Delete answer", %q{
   I want to be able to delete my answer
 } do
   given(:user) { create(:user) }
-  let!(:question) { create(:question, user_id: user.id) }
-  let!(:answer) { create(:answer, user_id: user.id, question_id: question.id) }
+  given(:question) { create(:question, user_id: user.id) }
+  given!(:answer) { create(:answer, user_id: user.id, question_id: question.id) }
 
   scenario "Authenticated user delete question" do
     sign_in(user)
@@ -16,8 +16,8 @@ feature "Delete answer", %q{
     within ".answers" do
       click_on "Delete"
     end
-
+    # проверить отсутствие удаленнгго ответа
+    expect(page).to_not have_content "MyText"
     expect(page).to have_content "Answer was successfully deleted"
-    expect(current_path).to eq question_path(question)
   end
 end
