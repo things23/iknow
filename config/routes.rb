@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   root "questions#index"
-  resources :questions do
+  concern :commentable do
+    resources :comments
+  end
+  resources :questions, concerns: :commentable do
     resources :answers, shallow: true
   end
   # The priority is based upon order of creation: first created -> highest priority.

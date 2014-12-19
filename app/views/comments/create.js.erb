@@ -1,0 +1,13 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $('.answer-errors').html('<%= j message %>');
+  <% end %>
+<% else %>
+  $('.comments').html('<%= render j 'questions/comments' %>' );
+  $('#comment_body').val('');
+  $(".add-comment-link").on("click", function(event){
+    event.preventDefault();
+    $(this).hide();
+    $(".new_comment").show();
+  });
+<% end %>

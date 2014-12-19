@@ -2,9 +2,7 @@ require 'rails_helper'
 
 describe AnswersController do
   sign_in_user
-  #убрать везде user_id и тд user: user
-  # убрать user_id: @user.id из параметров
-  # пытаемся удалить чужой ответ, видим что-то
+
   let(:question) { create(:question, user: @user) }
   let(:answer) { create(:answer, user: @user, question: question) }
 
@@ -25,7 +23,7 @@ describe AnswersController do
         expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
       end
 
-      it "renders new view" do
+      it "re-renders create template" do
         post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
         expect(response).to render_template :create
       end

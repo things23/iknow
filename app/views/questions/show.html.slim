@@ -1,5 +1,16 @@
 .question
   = render "questions"
+  - if @question.comments.any?
+    .comments
+      =render "comments"
+    - if user_signed_in?
+      p= link_to "add a comment", '', class: "add-comment-link"
+      =form_for [@question, @comment], remote: true do |f|
+        =f.label :body, "Comment"
+        .comment-errors
+        =f.text_area :body
+        =f.submit "Add"
+/исправить - при создании ответа, форма исчезает, из-за того, что она в классе answers, он рендерится без этой формы в паршиале(видимо)
 - if @question.answers.any?
   .answers
     = render "answers"
@@ -9,5 +20,6 @@
         .answer-errors
         = f.text_area :body
         = f.submit "Post Your Answer"
+
 
 
