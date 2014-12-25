@@ -1,5 +1,9 @@
 h3= @question.title
 p= @question.body
+p Attachments
+ul
+  - @question.attachments.each do |a|
+    li= a.file.file.filename
 - if @question.user == current_user
   ul class = "pull-right"
     li
