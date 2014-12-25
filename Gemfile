@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jquery-turbolinks', '~> 2.1.0'
 gem 'devise', '~> 3.4.1'
+gem 'carrierwave', '~> 0.10.0'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
