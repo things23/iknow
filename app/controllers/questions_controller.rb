@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:update, :destroy]
+
   def index
     @questions = Question.all
   end
@@ -9,7 +10,6 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @answer = @question.answers.build
     @answer.attachments.build
-    @comment = @question.comments.build
   end
 
   def new

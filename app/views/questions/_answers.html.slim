@@ -17,3 +17,8 @@ h4 Answers
          / = f.label :body, "Answer"
          / = f.text_area :body
          / = f.submit "Save", class: "btn btn-primary"
+      .comments
+        =render "comments/comments", commentable: answer, comments: answer.comments
+      - if user_signed_in?
+        =render "comments/form", commentable: answer, comment: @answer.comments.new
+
