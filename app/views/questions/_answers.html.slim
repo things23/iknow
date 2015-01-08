@@ -1,7 +1,7 @@
 h4 Answers
 - @question.answers.each do |answer|
   - if answer.persisted?
-    .answer
+    div.answer id="answer-#{answer.id}"
       p= answer.body
       cite= answer.user.email
       - answer.attachments.each do |a|
@@ -14,6 +14,6 @@ h4 Answers
           li
             = link_to "Delete", answer, method: :delete, data: { confirm: 'Are you sure?'}
         = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-              = f.label :body, "Answer"
+            = f.label :body, "Answer"
               = f.text_area :body
               = f.submit "Save", class: "btn btn-primary"

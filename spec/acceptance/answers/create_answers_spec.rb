@@ -16,16 +16,17 @@ feature "Create answer", %q{
     end
 
     scenario "create answer", js: true do
-      within ".answers" do
-        fill_in "Your Answer", with: "My answer"
-        click_on "Post Your Answer"
+      fill_in "Your Answer", with: "My answer"
+      click_on "Post Your Answer"
+
+      within "#answer-1" do
         expect(page).to have_content "My answer"
       end
     end
 
     scenario "User try to create invalid answer", js: true do
-      within ".answers" do
-        click_on "Post Your Answer"
+      click_on "Post Your Answer"
+      within ".answer-errors" do
         expect(page).to have_content "Body can't be blank"
       end
     end
