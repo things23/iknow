@@ -5,6 +5,7 @@
   - if user_signed_in?
     p= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase ,commentable_id: @question.id }
     =render "comments/form", commentable: @question, comment: @question.comments.new
+  div.forjson
 
 - if @question.answers.any?
   .answers

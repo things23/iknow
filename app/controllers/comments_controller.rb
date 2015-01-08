@@ -3,7 +3,10 @@ class CommentsController < ApplicationController
 
 
   def create
-    @comment = @commentable.comments.create(comments_params.merge(user: current_user))
+    @comment = @commentable.comments.build(comments_params.merge(user: current_user))
+    if @comment.save
+      render json: @comment
+    end
   end
 
   private
