@@ -78,3 +78,4 @@ $ ->
       $(".answer-errors").append(value)
   .bind 'ajax:complete', ->
     $("#new_answer").find('#answer_body').val("")
+

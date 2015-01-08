@@ -1,5 +1,5 @@
-=form_for [commentable, comment] do |f|
+=form_for [commentable, comment], remote: true, html: { id: "add-comment-#{commentable.class.to_s.downcase}-#{commentable.id}" } do |f|
   =f.label :body, "Comment"
-    .comment-errors
-    =f.text_area :body
-    =f.submit "Add"
+  .comment-errors
+  =f.text_area :body
+  =f.submit "Add"

@@ -3,24 +3,19 @@ class CommentsController < ApplicationController
 
 
   def create
-    @comment = @commentable.comments.new(comments_params.merge(user: current_user))
-
-    if @comment.save
-      if params[:question_id]
-        redirect_to @commentable
-      else
-        redirect_to @commentable.question
-      end
-    else
-      render :new
-    end
+    @comment = @commentable.comments.create(comments_params.merge(user: current_user))
   end
 
   private
 
   def load_commentable
-    resource, id = request.path.split('/')[1,2]
-    @commentable = resource.singularize.classify.constantize.find(id)
+    #resource, id = request.path.split('/')[1,2]
+    #@commentable = resource.singularize.classify.constantize.find(id)
+    if params[:question_id]
+      @commentable = Question.find(params[:question_id])
+    else
+      @commentable = Answer.find(params[:answer_id])
+    end
   end
 
   def comments_params

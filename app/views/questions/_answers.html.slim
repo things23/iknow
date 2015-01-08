@@ -17,7 +17,8 @@ h4 Answers
          / = f.label :body, "Answer"
          / = f.text_area :body
          / = f.submit "Save", class: "btn btn-primary"
-      .comments
+      p= link_to "add a comment", "", class: "add_comment_link", data: { commentable: answer.class.to_s.downcase, commentable_id: answer.id }
+      div id= "comments-answer-#{answer.id}"
         =render "comments/comments", commentable: answer, comments: answer.comments
       - if user_signed_in?
         =render "comments/form", commentable: answer, comment: @answer.comments.new

@@ -10,18 +10,26 @@ feature "Add a comment to answer", %q{
   given(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question) }
 
-  scenario "Athenticated user add comment to the  question", js: true do
-    sign_in(user)
-    visit question_path(question)
-
-    within ".answers" do
-      click_on "add a comment"
-      fill_in "Comment", with: "My comment"
-      click_on "Add"
+  describe "Authenticated user" do
+    before do
+      sign_in(user)
+      visit question_path(question)
     end
 
-    expect(page).to have_content("My comment")
+    scenario "add comment to the answer", js: true do
+      within ".answer" do
+        click_on "add a comment"
+        fill_in "Comment", with: "My comment"
+        click_on "Add"
+        expect(page).to_not have_selector "textarea"
+      end
+
+      within "#comments-answer-#{answer.id}" do
+        expect(page).to have_content("My comment")
+      end
+    end
   end
+
   scenario "Non-athenticated user try to add comment to the question" do
     visit question_path(question)
 

@@ -1,11 +1,11 @@
 .question
   = render "questions"
-  - if @question.comments.any?
-    .comments
-      =render "comments/comments", commentable: @question, comments: @question.comments
+  div id= "comments-question-#{@question.id}"
+    = render "comments/comments", commentable: @question, comments: @question.comments
   - if user_signed_in?
+    p= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase ,commentable_id: @question.id }
     =render "comments/form", commentable: @question, comment: @question.comments.new
-/исправить - при создании ответа, форма исчезает, из-за того, что она в классе answers, он рендерится без этой формы в паршиале(видимо)
+
 - if @question.answers.any?
   .answers
     = render "answers"
