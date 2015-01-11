@@ -12,7 +12,7 @@ h4 Answers
           li
             = link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
           li
-            = link_to "Delete", answer, method: :delete, data: { confirm: 'Are you sure?'}
+            = link_to "Delete", answer, class: "delete-answer-link", method: :delete, remote: true
         = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
             = f.label :body, "Answer"
               = f.text_area :body
