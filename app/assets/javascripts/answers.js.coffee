@@ -27,15 +27,6 @@ $ ->
     edit_answer_form.append("<label for='answer_body'>Answer</label>")
     edit_answer_form.append("<textarea id='answer_body' name='answer[body]'>#{answer}</textarea>")
     edit_answer_form.append("<input class='btn btn-primary' name='commit' type='submit' value='Save'>")
-    #<form accept-charset="UTF-8" action="/answers/298" class="edit_answer" data-remote="true" data-type="json" id="edit-answer-298" method="post" style="display: block;">
-     # <div style="display:none">
-        #<input name="utf8" type="hidden" value="✓">
-        #<input name="_method" type="hidden" value="patch">
-      #</div>
-      #<label for="answer_body">Answer</label>
-      #<textarea id="answer_body" name="answer[body]"> ccc c </textarea>
-      #<input class="btn btn-primary" name="commit" type="submit" value="Save">
-    #</form>
     #delete_edit_nav = edit_link.closest('.delete-edit-nav')
     edit_link.hide()
     $("#edit-answer-#{answer_id}").bind "ajax:success", (e, data, status, xhr) ->
@@ -47,10 +38,10 @@ $ ->
       edit_link.show()
   ))
 
-  $(document).on('click', '.delete-answer-link', ( (e) ->
-    e.preventDefault()
-    $(@).closest(".answer").fadeOut()
-  ))
+  #$(document).on('click', '.delete-answer-link', ( (e) ->
+   # e.preventDefault()
+    #$(@).closest(".answer").fadeOut()
+  #))
 
   $("#new_answer").bind 'ajax:success', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)

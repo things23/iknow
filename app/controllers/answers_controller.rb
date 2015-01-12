@@ -24,11 +24,10 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
+
     respond_to do |format|
-      format.js
+      format.js { render layout: false }
     end
-    #flash[:notice] = "Answer was successfully deleted"
-    #redirect_to question_path(@answer.question)
   end
 
   private

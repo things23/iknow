@@ -9,12 +9,12 @@ describe AnswersController do
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new answer to the databse" do
-        expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
+        expect { post :create, question_id: question, answer: attributes_for(:answer), format: :json}.to change(question.answers, :count).by(1)
       end
 
       it "render create template" do
-        post :create, question_id: question, answer: attributes_for(:answer), format: :js
-        expect(response).to render_template :create
+        post :create, question_id: question, answer: attributes_for(:answer), format: :json
+        expect(response.status).to eq(200)
       end
     end
 
@@ -33,24 +33,24 @@ describe AnswersController do
   describe "PATCH #update" do
     context "with valid attributes" do
       it "assigns requested answer to @answer" do
-        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        patch :update, id: answer, answer: attributes_for(:answer), format: :json
         expect(assigns(:answer)).to eq answer
       end
 
       it "assigns the question" do
-        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        patch :update, id: answer, answer: attributes_for(:answer), format: :json
         expect(assigns(:question)).to eq question
       end
 
       it "changes answers attributes" do
-        patch :update, id: answer, answer: { body: "new body" }, format: :js
+        patch :update, id: answer, answer: { body: "new body" }, format: :json
         answer.reload
         expect(answer.body).to eq "new body"
       end
 
       it "render update template" do
-        patch :update, id: answer, answer: attributes_for(:answer), format: :js
-        expect(response).to render_template :update
+        patch :update, id: answer, answer: attributes_for(:answer), format: :json
+        expect(response.status).to eq(200)
       end
     end
 
@@ -66,11 +66,11 @@ describe AnswersController do
   describe "DELETE #destroy" do
     it "deletes answer from related question" do
       answer
-      expect{ delete :destroy, id: answer }.to change(Answer, :count).by(-1)
+      expect{ delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
     end
     it "redirects to root_path" do
-      delete :destroy, id: answer
-      expect(response).to redirect_to question_path(question)
+      delete :destroy, id: answer, format: :js
+      expect(response.status).to eq(200)
     end
 
     context "delete another users answer" do

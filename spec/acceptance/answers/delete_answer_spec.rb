@@ -18,6 +18,5 @@ feature "Delete answer", %q{
     end
     # проверить отсутствие удаленнгго ответа
     expect(page).to_not have_content "MyText"
-    expect(page).to have_content "Answer was successfully deleted"
   end
 end
