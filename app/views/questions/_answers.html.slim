@@ -8,12 +8,12 @@ h4 Answers
         ul
           li= link_to a.file.identifier, a.file.url
       - if user_signed_in? && answer.user == current_user
-        ul class = "pull-right"
+        ul class="pull-right delete-edit-nav"
           li
             = link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
           li
             = link_to "Delete", answer, class: "delete-answer-link", method: :delete, remote: true
-        = form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-            = f.label :body, "Answer"
-              = f.text_area :body
-              = f.submit "Save", class: "btn btn-primary"
+        /= form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" }, data: { type: :json } do |f|
+         / = f.label :body, "Answer"
+         / = f.text_area :body
+         / = f.submit "Save", class: "btn btn-primary"

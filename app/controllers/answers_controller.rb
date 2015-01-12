@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:edit, :update, :destroy]
 
   def create
-    @answer = @question.answers.build(answers_params.merge(user: current_user))
+    @answer = @question.answers.create(answers_params.merge(user: current_user))
     #@answer.save
     unless @answer.save
       render json: @answer.errors.full_messages, status: :unprocessable_entity
@@ -15,8 +15,11 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answers_params)
+    #@answer.update(answers_params)
     @question = @answer.question
+    unless @answer.update(answers_params)
+      render json: @answer.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   def destroy
