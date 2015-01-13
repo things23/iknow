@@ -2,7 +2,7 @@ h4 Answers
 - @question.answers.each do |answer|
   - if answer.persisted?
     div.answer id="answer-#{answer.id}"
-      p= answer.body
+      p.body_answ = answer.body
       cite= answer.user.email
       - answer.attachments.each do |a|
         ul
@@ -13,13 +13,9 @@ h4 Answers
             = link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
           li
             = link_to "Delete", answer, class: "delete-answer-link", method: :delete, remote: true
-        /= form_for answer, remote: true, html: { id: "edit-answer-#{answer.id}" }, data: { type: :json } do |f|
-         / = f.label :body, "Answer"
-         / = f.text_area :body
-         / = f.submit "Save", class: "btn btn-primary"
-      p= link_to "add a comment", "", class: "add_comment_link", data: { commentable: answer.class.to_s.downcase, commentable_id: answer.id }
+      div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: answer.class.to_s.downcase, commentable_id: answer.id }
       div id= "comments-answer-#{answer.id}"
         =render "comments/comments", commentable: answer, comments: answer.comments
-      - if user_signed_in?
-        =render "comments/form", commentable: answer, comment: @answer.comments.new
+      /- if user_signed_in?
+      /  =render "comments/form", commentable: answer, comment: @answer.comments.new
 

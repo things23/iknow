@@ -1,1 +1,2 @@
-$('.delete-answer-link').closest(".answer").fadeOut()
+<% answer = "#answer-#{@answer.id}" %>
+$("<%= answer %>").fadeOut();

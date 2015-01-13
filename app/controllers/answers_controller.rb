@@ -26,7 +26,7 @@ class AnswersController < ApplicationController
     @answer.destroy
 
     respond_to do |format|
-      format.js { render layout: false }
+      format.js
     end
   end
 
