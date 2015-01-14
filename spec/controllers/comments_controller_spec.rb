@@ -9,10 +9,12 @@ describe CommentsController do
     context "with valid attributes" do
       it "saves comment to database" do
         expect {
-            post :create, question_id: question, comment: attributes_for(:comment), format: :js
+            post :create, question_id: question, comment: attributes_for(:comment), format: :json
           }.to change(Comment, :count).by(1)
       end
       it "render create template" do
+        post :create, question_id: question, comment: attributes_for(:comment), format: :json
+        expect(response.status).to eq(200)
       end
     end
 

@@ -33,8 +33,8 @@ feature "Add a comment to answer", %q{
   scenario "Non-athenticated user try to add comment to the question" do
     visit question_path(question)
 
-    within ".question" do
-      expect(page).to_not have_link("add a comment")
+    within ".answers" do
+      expect(page).to_not have_link "add a comment"
     end
   end
 end

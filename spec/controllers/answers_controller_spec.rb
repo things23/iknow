@@ -12,7 +12,7 @@ describe AnswersController do
         expect { post :create, question_id: question, answer: attributes_for(:answer), format: :json}.to change(question.answers, :count).by(1)
       end
 
-      it "render create template" do
+      it "renders status: 200 " do
         post :create, question_id: question, answer: attributes_for(:answer), format: :json
         expect(response.status).to eq(200)
       end
@@ -23,10 +23,10 @@ describe AnswersController do
         expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
       end
 
-      #it "re-renders create template" do
-       # post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-        #expect(response).to render_template :create
-      #end
+      it "render status: 422" do
+        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
+        expect(response.status).to eq(422)
+      end
     end
   end
 
