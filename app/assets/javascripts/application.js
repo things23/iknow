@@ -14,5 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require handlebars.runtime
 //= require turbolinks
-//= require_tree .
+//= require_tree ./templates
+//= require_tree

@@ -1,0 +1,19 @@
+<div class='answer' id='answer-{{id}}''>
+  <p class='body_answ'>{{body}} gagagaga!</p>
+  <cite>{{user.email}}</cite>
+  <ul class='pull-right delete-edit-nav'>
+    <li><a class='edit-answer-link' data-answer-id={{id}} href=''>Edit</a></li>
+    <li>
+      <a class='delete-answer-link' data-method='delete' data-remote='true' href='/answers/{{id}}' rel='nofollow'>Delete</a>
+    </li>
+  </ul>
+   <div>
+      <a class='add_comment_link' data-commentable-id={{id}} data-commentable='answer' href>add a comment</a>
+    </div>
+  <div id='comments-answer-#{answer.id}'></div>
+  <ul class='attachments'>
+    {{#each attachments}}
+      <li><a href={{url}}>{{filename}}</a></li>
+    {{/each}}
+  </ul>
+</div>

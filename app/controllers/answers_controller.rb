@@ -5,7 +5,6 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answers_params.merge(user: current_user))
-    #@answer.save
     unless @answer.save
       render json: @answer.errors.full_messages, status: :unprocessable_entity
     end

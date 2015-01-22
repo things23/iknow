@@ -14,6 +14,7 @@ gem 'devise', '~> 3.4.1'
 gem 'carrierwave', '~> 0.10.0'
 gem 'remotipart'
 gem 'jbuilder', '~> 2.0'
+gem 'handlebars_assets', '~> 0.18'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 

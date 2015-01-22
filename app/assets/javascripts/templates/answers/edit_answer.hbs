@@ -1,0 +1,9 @@
+<form id="edit-answer-{{id}}" accept-charset="UTF-8" action='/answers/{{id}}' class="edit_answer" data-remote="true" data-type="json"  method="post" style="display: block;">
+  <div style="display: block;">
+    <input name="utf8" type="hidden" value="✓">
+    <input name="_method" type="hidden" value="patch">
+  </div>
+  <label for="answer_body">Edit answer</label>
+  <textarea id="answer_body" name="answer[body]">{{body}}</textarea>
+  <input class="btn btn-primary" name="commit" type="submit" value="Save">
+</form>
