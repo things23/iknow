@@ -9,6 +9,7 @@ $ ->
     edit_link = $(@)
     answer_id = edit_link.data('answerId')
     answer = edit_link.closest(".answer").find(".body_answ").text()
+    edit_link.hide()
     template = HandlebarsTemplates['answers/edit_answer']({id: answer_id, body: answer})
     $("#answer-#{answer_id}").append(template)
     console.log(template)
@@ -24,8 +25,6 @@ $ ->
   $("#new_answer").bind 'ajax:success', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
     template = HandlebarsTemplates['answers/answer'](answer)
-    console.log(answer)
-    console.log(template)
     $('.answers').append(template)
   .bind 'ajax:error', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)

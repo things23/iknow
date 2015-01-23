@@ -1,0 +1,11 @@
+<div id='form_comment_{{commentable}}-{{id}}'>
+  <form id='add-comment-{{commentable}}-{{id}}' accept-charset="UTF-8" action="/{{commentable}}s/{{id}}/comments" class="new_comment" data-remote="true" method="post" style="display: block;">
+    <div style="display:none">
+      <input name="utf8" type="hidden" value="✓">
+    </div>
+    <label for="comment_body">New Comment</label>
+    <div class="comment-errors"></div>
+    <textarea id="comment_body" name="comment[body]"></textarea>
+    <input name="commit" type="submit" value="Add">
+  </form>
+</div>
