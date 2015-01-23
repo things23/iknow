@@ -15,6 +15,8 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'remotipart'
 gem 'jbuilder', '~> 2.0'
 gem 'handlebars_assets', '~> 0.18'
+gem 'private_pub', '~> 1.0.3'
+gem 'thin', '~> 1.6.3'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 

@@ -1,29 +1,36 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_question, only: [:new, :create]
+  before_action :load_question, only: [:create]
   before_action :load_answer, only: [:edit, :update, :destroy]
 
   def create
-    @answer = @question.answers.create(answers_params.merge(user: current_user))
-    unless @answer.save
-      render json: @answer.errors.full_messages, status: :unprocessable_entity
-    end
-     # render json: @answer.to_json(include: :attachments, only: :body)
-      # render json: @answer
-    #end
+    @answer = @question.answers.build(answers_params.merge(user: current_user))
+    #unless @answer.save
+     # render json: @answer.errors.full_messages, status: :unprocessable_entity
+   # end
+      if @answer.save
+        PrivatePub.publish_to "/questions/#{@question.id}/answers",
+        answer: (render template: "answers/create.json.jbuilder")
+      else
+        respond_to do |format|
+          format.js { render status: :unprocessable_entity }
+        end
+      end
   end
 
   def update
-    #@answer.update(answers_params)
     @question = @answer.question
     unless @answer.update(answers_params)
       render json: @answer.errors.full_messages, status: :unprocessable_entity
     end
+    #if @answer.update(answers_params)
+    #  PrivatePub.publish_to "/questions/#{@question.id}/answers",
+    #  answer: (render template: "answers/update.json.jbuilder")
+    #end
   end
 
   def destroy
     @answer.destroy
-
     respond_to do |format|
       format.js
     end

@@ -1,2 +1,4 @@
 <% answer = "#answer-#{@answer.id}" %>
-$("<%= answer %>").fadeOut();
+<% publish_to "/questions/#{@answer.question.id}/answers" do %>
+  $("<%= answer %>").fadeOut();
+<% end %>

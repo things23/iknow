@@ -22,16 +22,24 @@ $ ->
       edit_link.show()
   ))
 
-  $("#new_answer").bind 'ajax:success', (e, data, status, xhr) ->
-    answer = $.parseJSON(xhr.responseText)
+  questionId = $('.answers').data('questionId')
+  PrivatePub.subscribe '/questions/'+questionId+'/answers', (data, channel) ->
+    console.log(data)
+    answer = $.parseJSON(data['answer'])
     template = HandlebarsTemplates['answers/answer'](answer)
     $('.answers').append(template)
-  .bind 'ajax:error', (e, xhr, status, error) ->
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors, (index, value) ->
-      $(".answer-errors").append(value)
-  .bind 'ajax:complete', ->
     $("form#new_answer").find('#answer_body').val("")
 
+  #$("#new_answer").bind 'ajax:success', (e, data, status, xhr) ->
+  #  answer = $.parseJSON(xhr.responseText)
+  #  console.log(answer)
+  #  template = HandlebarsTemplates['answers/answer'](answer)
+  #  $('.answers').append(template)
+  #.bind 'ajax:error', (e, xhr, status, error) ->
+  #  errors = $.parseJSON(xhr.responseText)
+  #  $.each errors, (index, value) ->
+  #    $(".answer-errors").append(value)
+  #.bind 'ajax:complete', ->
+  #  $("form#new_answer").find('#answer_body').val("")
 
 

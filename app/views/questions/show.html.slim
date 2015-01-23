@@ -8,10 +8,10 @@ div.question id="question-#{@question.id}"
   div.forjson
 
 - if @question.answers.any?
-  .answers
+  .answers data={question_id: "#{@question.id}"}
     = render "answers"
   - if user_signed_in?
-    = form_for [@question, @answer], remote: true, data: { type: :json } do |f|
+    = form_for [@question, @answer], remote: true do |f|
       = f.label :body, "Your Answer"
       .answer-errors
       = f.text_area :body
@@ -19,5 +19,6 @@ div.question id="question-#{@question.id}"
         = a.label :file
         = a.file_field :file
       = f.submit "Post Your Answer"
+= subscribe_to "/questions/#{@question.id}/answers"
 
 
