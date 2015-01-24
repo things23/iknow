@@ -5,17 +5,14 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.build(answers_params.merge(user: current_user))
-    #unless @answer.save
-     # render json: @answer.errors.full_messages, status: :unprocessable_entity
-   # end
-      if @answer.save
-        PrivatePub.publish_to "/questions/#{@question.id}/answers",
-        answer: (render template: "answers/create.json.jbuilder")
-      else
-        respond_to do |format|
-          format.js { render status: :unprocessable_entity }
-        end
+    if @answer.save
+      PrivatePub.publish_to "/questions/#{@question.id}/answers",
+      answer: (render template: "answers/create.json.jbuilder")
+    else
+      respond_to do |format|
+        format.js { render status: :unprocessable_entity }
       end
+    end
   end
 
   def update
