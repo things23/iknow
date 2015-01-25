@@ -16,7 +16,6 @@ feature "Delete question", %q{
     click_on "Delete"
 
     expect(page).to_not have_content "MyQuestion"
-    expect(page).to have_content "Question was successfully deleted"
   end
 
   scenario "Authenticated user try to delete another users question" do

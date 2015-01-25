@@ -17,6 +17,9 @@ gem 'jbuilder', '~> 2.0'
 gem 'handlebars_assets', '~> 0.18'
 gem 'private_pub', '~> 1.0.3'
 gem 'thin', '~> 1.6.3'
+gem 'responders'
+gem 'omniauth', '~> 1.2.2'
+gem 'omniauth-facebook', '~> 2.0.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 

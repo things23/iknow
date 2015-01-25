@@ -26,10 +26,6 @@ describe QuestionsController do
       expect(assigns(:question)).to eq question
     end
 
-    it "builds new attachment for answer" do
-      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
-    end
-
     it "assigns new answer for question" do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
@@ -44,10 +40,6 @@ describe QuestionsController do
 
     it "assigns a new Question to @question" do
       expect(assigns(:question)).to be_a_new(Question)
-    end
-
-    it "builds new attachment for question" do
-      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
     end
 
     it "renders new view" do
@@ -120,7 +112,7 @@ describe QuestionsController do
 
     it "redirect to index view" do
       delete :destroy, user_id: @user.id, id: question
-      expect(response).to redirect_to root_path
+      expect(response).to redirect_to questions_path
     end
 
     context "delete another users question" do

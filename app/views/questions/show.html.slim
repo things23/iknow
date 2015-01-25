@@ -4,7 +4,6 @@ div.question id="question-#{@question.id}"
     = render "comments/comments", commentable: @question, comments: @question.comments
   - if user_signed_in?
     div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase, commentable_id: @question.id }
-    /=render "comments/form", commentable: @question, comment: @question.comments.new
   div.forjson
 
 - if @question.answers.any?
@@ -15,7 +14,7 @@ div.question id="question-#{@question.id}"
       = f.label :body, "Your Answer"
       .answer-errors
       = f.text_area :body
-      = f.fields_for :attachments do |a|
+      = f.fields_for :attachments, @answer.attachments.build do |a|
         = a.label :file
         = a.file_field :file
       = f.submit "Post Your Answer"
