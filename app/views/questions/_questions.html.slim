@@ -4,10 +4,11 @@ p Attachments
 ul
   - @question.attachments.each do |a|
     li= link_to a.file.identifier, a.file.url
-- if @question.user == current_user
-  ul class = "pull-right"
+ul class = "pull-right"
+  -if can? :edit, @question
     li
       = link_to "Edit", "", class: "edit-question-link"
+  -if can? :destroy, @question
     li
       = link_to "Delete", @question, method: :delete, data: { confirm: 'Are you sure?'}
   = form_for @question, remote: true do |f|

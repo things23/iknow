@@ -1,7 +1,8 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_commentable
 
-
+  authorize_resource
   def create
     @comment = @commentable.comments.build(comments_params.merge(user: current_user))
     if @comment.save

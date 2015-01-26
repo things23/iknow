@@ -7,17 +7,18 @@ class AnswersController < ApplicationController
   respond_to :json, only: :update
   respond_to :js, except: :create
 
+  authorize_resource
+
   def create
     @answer = @question.answers.build(answers_params.merge(user: current_user))
     if @answer.save
       PrivatePub.publish_to("/questions/#{@question.id}/answers",
         answer: (render template: "answers/create.json.jbuilder"))
-    else
-      respond_to do |format|
+    else      respond_to do |format|
         format.js { render status: :unprocessable_entity }
       end
     end
-    #почти решение, подумать по поводу статуса
+    #почти решение, подумать по поводу статуса ошибки
     #respond_with(@answer = @question.answers.create(answers_params.merge(user: current_user)))
   end
 

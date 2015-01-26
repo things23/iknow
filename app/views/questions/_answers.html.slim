@@ -9,10 +9,13 @@ h4 Answers
           li= link_to a.file.identifier, a.file.url
       - if user_signed_in? && answer.user == current_user
         ul class="pull-right delete-edit-nav"
-          li
-            = link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
-          li
-            = link_to "Delete", answer, class: "delete-answer-link", method: :delete, remote: true
+          - if can? :edit, answer
+            li
+              = link_to "Edit", "", class: "edit-answer-link", data: { answer_id: answer.id }
+          - if can? :destroy, answer
+            li
+              = link_to "Delete", answer, class: "delete-answer-link", method: :delete, remote: true
+      - if can? :create, Comment
         div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: answer.class.to_s.downcase, commentable_id: answer.id }
       div id= "comments-answer-#{answer.id}"
         =render "comments/comments", commentable: answer, comments: answer.comments

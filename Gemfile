@@ -21,6 +21,7 @@ gem 'responders'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-facebook', '~> 2.0.0'
 gem 'omniauth-twitter', '~> 1.1.0'
+gem 'cancancan', '~> 1.10.1'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 

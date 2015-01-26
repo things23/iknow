@@ -2,14 +2,13 @@ div.question id="question-#{@question.id}"
   = render "questions"
   div id= "comments-question-#{@question.id}"
     = render "comments/comments", commentable: @question, comments: @question.comments
-  - if user_signed_in?
-    div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase, commentable_id: @question.id }
-  div.forjson
+  - if can?(:create, Comment)
+      div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase, commentable_id: @question.id }
 
 - if @question.answers.any?
   .answers data={question_id: "#{@question.id}"}
     = render "answers"
-  - if user_signed_in?
+  - if can?(:create, Answer)
     = form_for [@question, @answer], remote: true do |f|
       = f.label :body, "Your Answer"
       .answer-errors

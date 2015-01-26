@@ -10,13 +10,13 @@ nav class="navbar navbar-fixed-top navbar-default" role="navigation"
 
     div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
       ul class="nav navbar-nav pull-right"
+        - if can?(:create, Question)
+            li= link_to "Ask Question", new_question_path
         - if user_signed_in?
           li
-            = current_user.email
-          li
-            = link_to "Ask Question", new_question_path
-          li
             = link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+          li
+            p= current_user.email
         - else
           li
             = link_to 'Sign in', new_user_session_path

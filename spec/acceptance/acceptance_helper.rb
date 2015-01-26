@@ -1,5 +1,5 @@
 require "rails_helper"
-
+require 'cancan/matchers'
 RSpec.configure do |config|
   Capybara.javascript_driver = :poltergeist
 
