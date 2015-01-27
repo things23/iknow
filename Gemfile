@@ -22,6 +22,10 @@ gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-facebook', '~> 2.0.0'
 gem 'omniauth-twitter', '~> 1.1.0'
 gem 'cancancan', '~> 1.10.1'
+gem 'doorkeeper', '~> 2.1.0'
+gem 'active_model_serializers', '~> 0.9.3'
+gem 'oj', '~> 2.11.4'
+gem 'oj_mimic_json', '~> 1.0.1'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
@@ -36,6 +40,7 @@ group :test do
   gem 'capybara', '~> 2.4.4'
   gem 'launchy', '~> 2.4.3'
   gem 'poltergeist', '~> 1.5.1'
+  gem 'json_spec', '~> 1.1.4'
 end
 
 

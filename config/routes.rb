@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks'}
   root "questions#index"
   concern :commentable do
@@ -6,6 +7,18 @@ Rails.application.routes.draw do
   end
   resources :questions, concerns: :commentable do
     resources :answers, concerns: :commentable, shallow: true
+  end
+
+  resources :users, only: [:index, :show]
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+      resources :questions
+      resources :users
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

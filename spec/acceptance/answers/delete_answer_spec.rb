@@ -6,10 +6,10 @@ feature "Delete answer", %q{
   I want to be able to delete my answer
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question, user_id: user.id) }
-  given!(:answer) { create(:answer, user_id: user.id, question_id: question.id) }
+  given(:question) { create(:question, user: user) }
+  given!(:answer) { create(:answer, user: user, question: question) }
 
-  background do
+  before do
     sign_in(user)
     visit question_path(question)
   end
