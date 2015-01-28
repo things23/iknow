@@ -61,7 +61,7 @@ describe 'Questions API' do
     let(:question) { create(:question, user: user ) }
     let!(:answer) { create(:answer, user: user, question: question)}
     let!(:comment) { create :comment, commentable: question, user: user }
-    #let!(:attachment) { create :attachment, commentable: question, user: user }
+    let!(:attachment) { create :attachment, attachmentable: question, user: user }
     #let(:attachment)   { question.attachments.first }
 
     context 'unauthorized' do
@@ -100,6 +100,66 @@ describe 'Questions API' do
           it 'contains #{attr}' do
             expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("question/comments/0/#{attr}")
           end
+        end
+      end
+
+      context "attachments" do
+        it 'included in question object' do
+          expect(response.body).to have_json_size(1).at_path("question/attachments")
+        end
+
+        %w(id file).each do |attr|
+          it 'contains #{attr}' do
+            expect(response.body).to be_json_eql(attachment.send(attr.to_sym).to_json).at_path("question/attachments/0/#{attr}")
+          end
+        end
+      end
+    end
+  end
+
+  describe "POST /create" do
+    context 'unauthorized' do
+
+      it 'returns 401 status if there is no access_token' do
+        post '/api/v1/questions/', format: :json
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token is invalid' do
+        post '/api/v1/questions', format: :json, access_token: '1234'
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      let(:user) { create(:user)}
+      let(:access_token) { create(:access_token) }
+      #let(:question) { create(:question)}
+
+      context "with valid attributes" do
+
+        it 'returns 200' do
+          post '/api/v1/questions/', question: attributes_for(:question), user: user, format: :json, access_token: access_token.token
+          expect(response).to be_success
+        end
+
+        it 'saves the new question in the database' do
+         expect {
+          post '/api/v1/questions/', question: attributes_for(:question), user: user, format: :json, access_token: access_token.token
+          }.to change(Question, :count).by(1)
+        end
+      end
+
+      context "with invalid attributes" do
+        it 'returns 422' do
+          post '/api/v1/questions/', question: attributes_for(:invalid_question), user: user, format: :json, access_token: access_token.token
+          expect(response.status).to eq 422
+        end
+
+        it 'does not save the new question in the database' do
+         expect {
+          post '/api/v1/questions/', question: attributes_for(:invalid_question), user: user, format: :json, access_token: access_token.token
+          }.to_not change(Question, :count)
         end
       end
     end
