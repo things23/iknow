@@ -22,11 +22,6 @@ describe AnswersController do
       it "does not save the answer" do
         expect { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }.to_not change(Answer, :count)
       end
-
-      it "render status: 422" do
-        post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js
-        expect(response.status).to eq(422)
-      end
     end
   end
 

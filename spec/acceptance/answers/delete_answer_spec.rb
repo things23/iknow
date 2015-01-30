@@ -14,10 +14,11 @@ feature "Delete answer", %q{
     visit question_path(question)
   end
 
-  scenario "Authenticated user delete question", js: true do
-    within ".answers" do
+  scenario "Authenticated user delete question", json: true do
+    within ".answer" do
       click_on "Delete"
-      expect(page).to_not have_content "MyText"
+      sleep(5)
     end
+    expect(page).to_not have_content "MyText"
   end
 end

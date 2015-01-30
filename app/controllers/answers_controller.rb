@@ -10,28 +10,12 @@ class AnswersController < ApplicationController
   authorize_resource
 
   def create
-    #@answer = @question.answers.build(answers_params.merge(user: current_user))
-    #if @answer.save
-    #  PrivatePub.publish_to("/questions/#{@question.id}/answers",
-    #    answer: (render template: "answers/create.json.jbuilder"))
-    #else      respond_to do |format|
-    #    format.js { render status: :unprocessable_entity }
-    #  end
-    #end
-    #почти решение, подумать по поводу статуса ошибки
     respond_with(@answer = @question.answers.create(answers_params.merge(user: current_user)))
   end
 
   def update
-    #unless @answer.update(answers_params)
-    #  render json: @answer.errors.full_messages, status: :unprocessable_entity
-    #end
     @answer.update(answers_params)
     respond_with @answer
-    #if @answer.update(answers_params)
-    #  PrivatePub.publish_to "/questions/#{@question.id}/answers",
-    #  answer: (render template: "answers/update.json.jbuilder")
-    #end
   end
 
   def destroy
