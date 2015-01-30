@@ -138,9 +138,9 @@ describe 'Questions API' do
 
       context "with valid attributes" do
 
-        it 'returns 200' do
+        it 'returns 201' do
           post '/api/v1/questions/', question: attributes_for(:question), user: user, format: :json, access_token: access_token.token
-          expect(response).to be_success
+          expect(response.status).to eq 201
         end
 
         it 'saves the new question in the database' do

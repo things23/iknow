@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     if auth.provider == 'facebook'
       email = auth.info[:email] #if provider is facebook
     else
-      email = "#{auth.info[:nickname]}_#{10+rand(1000000)}@iknow.com"
+      email = "#{auth.info[:nickname]}@iknow.com"
     end
     user = User.where(email: email).first
     if user

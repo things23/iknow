@@ -124,9 +124,9 @@ describe 'Answers API' do
       let!(:question) { create(:question, user: user)}
 
       context "with valid attributes"
-        it 'returns 200' do
+        it 'returns 201' do
           post "/api/v1/questions/#{question.id}/answers", question_id: question, answer: attributes_for(:answer), user: user, format: :json, access_token: access_token.token
-          expect(response).to be_success
+          expect(response.status).to eq 201
         end
 
         it 'saves the new answer in the database' do
