@@ -6,8 +6,9 @@ feature "Delete answer", %q{
   I want to be able to delete my answer
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question) }
+
 
   before do
     sign_in(user)
@@ -15,9 +16,8 @@ feature "Delete answer", %q{
   end
 
   scenario "Authenticated user delete question", json: true do
-    within ".answers" do
+    within ".delete-edit-nav" do
       click_on "Delete"
-      sleep(5)
       expect(page).to_not have_content "MyText"
     end
   end

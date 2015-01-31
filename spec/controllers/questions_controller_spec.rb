@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe QuestionsController do
   sign_in_user
-  let(:question) { create(:question, user_id: @user.id) }
+  let(:question) { create(:question, user: @user) }
 
   describe "GET #index" do
     let(:questions) { create_list(:question, 2) }
@@ -50,11 +50,11 @@ describe QuestionsController do
   describe "POST #create" do
     context "with valid attributes" do
       it "saves the new question in the database" do
-        expect { post :create, user_id: @user.id, question: attributes_for(:question) }.to change(Question, :count).by(1)
+        expect { post :create, user: @user, question: attributes_for(:question) }.to change(Question, :count).by(1)
       end
 
       it "redirects to show view" do
-        post :create, user_id: @user.id, question: attributes_for(:question)
+        post :create, user: @user, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
@@ -107,11 +107,11 @@ describe QuestionsController do
   describe "DELETE #destroy" do
     before { question }
     it "deletes question " do
-      expect{ delete :destroy, user_id: @user.id, id: question }.to change(Question, :count).by(-1)
+      expect{ delete :destroy, user: @user, id: question }.to change(Question, :count).by(-1)
     end
 
     it "redirect to index view" do
-      delete :destroy, user_id: @user.id, id: question
+      delete :destroy, user: @user, id: question
       expect(response).to redirect_to questions_path
     end
 
@@ -119,17 +119,72 @@ describe QuestionsController do
       sign_in_another_user
 
       it "raises an error" do
-        expect { delete :destroy, user_id: @user.id, id: question }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { delete :destroy, user: @user, id: question }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
 
-  describe "#mark_best_answer" do
-    it "marks best answer" do
-      @id = 1
-      patch :mark_best_answer, id: question, question: { best_answer: @id }
-      question.reload
-      expect(question.best_answer).to eq @id
+  describe "PATCH #mark_best_answer" do
+    let(:answer) { create(:answer, question: question, user: @user) }
+    let(:question_with_best_answer) { create(:question, user: @user) }
+    let(:another_answer) { create(:answer, question: question_with_best_answer, user: @user) }
+
+    context "with valid attributes" do
+      context "if best answer dosen't mark yet" do
+        before { patch :mark_best_answer, id: question, answer_id: answer.id, format: :js }
+
+        it "assigns answer's id to question's best_answer" do
+          question.reload
+          expect(question.best_answer).to eq answer.id
+        end
+
+        it 'renders mark_best view' do
+          expect(response).to render_template :mark_best_answer
+        end
+      end
+      context "if best answer already mark" do
+        it "does not assign answer's id to question's best_answer" do
+          question_with_best_answer.best_answer = 1
+          question_with_best_answer.reload
+          @best_answer = question_with_best_answer.best_answer
+
+          patch :mark_best_answer, id: question_with_best_answer, answer_id: answer.id, format: :js
+          expect(question_with_best_answer.best_answer).to eq @best_answer
+        end
+      end
+    end
+
+    context "with invalid attributes" do
+      it "assigns related Answer to @question" do
+        patch :mark_best_answer, id: question, answer_id: nil, format: :js
+        expect(question.best_answer).to be_nil
+      end
     end
   end
+  # describe 'PATCH #mark_best' do
+   #context 'owner question' do
+   # sign_in_user
+   # before { patch :mark_best, id: answer, format: :js }
+
+   # it 'assigns requested Answer to @answer' do
+   #       expect(assigns(:answer)).to eq answer
+   #     end
+
+    #    it 'assigns requested answer for question current user' do
+    #      expect(assigns(:answer).question.user).to eq user
+    #    end#
+
+    #    it 'change attributes' do
+    #      answer.reload
+    #      expect(answer.mark_best).to be true
+    #    end
+
+    #    it 'change question solution' do
+    #      expect(answer.question.reload).to be_solution
+     #   end
+
+      #  it 'renders mark_best view' do
+      #    expect(response).to render_template :mark_best
+      #  end
+    #  end
 end
