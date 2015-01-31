@@ -126,7 +126,7 @@ describe QuestionsController do
 
   describe "PATCH #mark_best_answer" do
     let(:answer) { create(:answer, question: question, user: @user) }
-    let(:question_with_best_answer) { create(:question, user: @user) }
+    let(:question_with_best_answer) { create(:question, best_answer: 1, user: @user) }
     let(:another_answer) { create(:answer, question: question_with_best_answer, user: @user) }
 
     context "with valid attributes" do
@@ -144,12 +144,12 @@ describe QuestionsController do
       end
       context "if best answer already mark" do
         it "does not assign answer's id to question's best_answer" do
-          question_with_best_answer.best_answer = 1
-          question_with_best_answer.reload
-          @best_answer = question_with_best_answer.best_answer
+          best_answer = question_with_best_answer.best_answer
 
           patch :mark_best_answer, id: question_with_best_answer, answer_id: answer.id, format: :js
-          expect(question_with_best_answer.best_answer).to eq @best_answer
+          question_with_best_answer.reload
+          expect(question_with_best_answer.best_answer).to eq best_answer
+          expect(question_with_best_answer.best_answer).to_not eq answer.id
         end
       end
     end
@@ -161,30 +161,4 @@ describe QuestionsController do
       end
     end
   end
-  # describe 'PATCH #mark_best' do
-   #context 'owner question' do
-   # sign_in_user
-   # before { patch :mark_best, id: answer, format: :js }
-
-   # it 'assigns requested Answer to @answer' do
-   #       expect(assigns(:answer)).to eq answer
-   #     end
-
-    #    it 'assigns requested answer for question current user' do
-    #      expect(assigns(:answer).question.user).to eq user
-    #    end#
-
-    #    it 'change attributes' do
-    #      answer.reload
-    #      expect(answer.mark_best).to be true
-    #    end
-
-    #    it 'change question solution' do
-    #      expect(answer.question.reload).to be_solution
-     #   end
-
-      #  it 'renders mark_best view' do
-      #    expect(response).to render_template :mark_best
-      #  end
-    #  end
 end
