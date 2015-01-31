@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   end
   resources :questions, concerns: :commentable do
     resources :answers, concerns: :commentable, shallow: true
+    patch :mark_best_answer, on: :member
   end
 
   resources :users, only: [:index, :show]

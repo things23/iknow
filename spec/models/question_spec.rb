@@ -10,4 +10,13 @@ RSpec.describe Question, :type => :model do
   it { should validate_presence_of :body }
 
   it { should accept_nested_attributes_for :attachments }
+
+  describe ".set_best" do
+    let(:user) { create(:user) }
+    let!(:question) { create(:question, user: user) }
+    it "set id of best answer to best_answer attribute" do
+      @id = 1
+      expect { question.set_best(@id) }.to change { question.best_answer }.to(1)
+    end
+  end
 end

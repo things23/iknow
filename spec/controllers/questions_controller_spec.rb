@@ -123,4 +123,13 @@ describe QuestionsController do
       end
     end
   end
+
+  describe "#mark_best_answer" do
+    it "marks best answer" do
+      @id = 1
+      patch :mark_best_answer, id: question, question: { best_answer: @id }
+      question.reload
+      expect(question.best_answer).to eq @id
+    end
+  end
 end

@@ -101,7 +101,14 @@ input {
   }
 }
 
+.marked-best:before {
+  content: "Best answer ✓";
+  background-color: #32CD32;
+}
+
+
 /* comments */
 .new_comment {
   display: none;
 }
+

@@ -15,10 +15,10 @@ feature "Delete answer", %q{
   end
 
   scenario "Authenticated user delete question", json: true do
-    within ".answer" do
+    within ".answers" do
       click_on "Delete"
       sleep(5)
+      expect(page).to_not have_content "MyText"
     end
-    expect(page).to_not have_content "MyText"
   end
 end

@@ -6,4 +6,8 @@ class Answer < ActiveRecord::Base
   validates :body, :question_id, :user_id, presence: true
 
   accepts_nested_attributes_for :attachments
+
+  #def set_best
+  #  update_columns(best_answer: true)
+  #end
 end

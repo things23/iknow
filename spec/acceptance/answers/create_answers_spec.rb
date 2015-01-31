@@ -19,7 +19,7 @@ feature "Create answer", %q{
       fill_in "Your Answer", with: "My answer"
       click_on "Post Your Answer"
 
-      within "#answer-1" do
+      within ".answers" do
         expect(page).to have_content "My answer"
       end
     end

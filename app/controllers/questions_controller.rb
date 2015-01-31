@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:update, :destroy]
+  before_action :load_question, only: [:update, :destroy, :mark_best_answer]
   before_action :build_answer, only: :show
 
   respond_to :js, only: :update
@@ -30,6 +30,13 @@ class QuestionsController < ApplicationController
 
   def destroy
     respond_with(@question.destroy)
+  end
+
+  def mark_best_answer
+    unless @question.best_answer
+      @best = params[:answer_id]
+      @question.set_best(@best)
+    end
   end
 
   private
