@@ -51,5 +51,4 @@ feature "Mark answer as best", %q{
       end
     end
   end
-
 end
