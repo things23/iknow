@@ -7,7 +7,16 @@ class Answer < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments
 
-  #def set_best
-  #  update_columns(best_answer: true)
-  #end
+  def set_best
+    @id = self.question_id
+    question = Question.where(id: @id).first
+    #existed_best = Answer.where(question_id: question.id, best_answer: true).first
+    existed_best = question.answers.find_by(best_answer: true)
+
+    if existed_best
+      existed_best.update_attributes(best_answer: false)
+    end
+
+    update_columns(best_answer: true)
+  end
 end

@@ -2,12 +2,15 @@ Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks'}
   root "questions#index"
+
   concern :commentable do
-    resources :comments
+    resources :comments, except: [:index, :show]
   end
-  resources :questions, concerns: :commentable do
-    resources :answers, concerns: :commentable, shallow: true
-    patch :mark_best_answer, on: :member
+
+  resources :questions, shallow: true, concerns: :commentable do
+    resources :answers, except: [:index, :new, :edit], concerns: :commentable do
+      patch :mark_best_answer, on: :member
+    end
   end
 
   resources :users, only: [:index, :show]

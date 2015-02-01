@@ -124,41 +124,13 @@ describe QuestionsController do
     end
   end
 
-  describe "PATCH #mark_best_answer" do
-    let(:answer) { create(:answer, question: question, user: @user) }
-    let(:question_with_best_answer) { create(:question, best_answer: 1, user: @user) }
-    let(:another_answer) { create(:answer, question: question_with_best_answer, user: @user) }
 
-    context "with valid attributes" do
-      context "if best answer dosen't mark yet" do
-        before { patch :mark_best_answer, id: question, answer_id: answer.id, format: :js }
 
-        it "assigns answer's id to question's best_answer" do
-          question.reload
-          expect(question.best_answer).to eq answer.id
-        end
-
-        it 'renders mark_best view' do
-          expect(response).to render_template :mark_best_answer
-        end
-      end
-      context "if best answer already mark" do
-        it "does not assign answer's id to question's best_answer" do
-          best_answer = question_with_best_answer.best_answer
-
-          patch :mark_best_answer, id: question_with_best_answer, answer_id: answer.id, format: :js
-          question_with_best_answer.reload
-          expect(question_with_best_answer.best_answer).to eq best_answer
-          expect(question_with_best_answer.best_answer).to_not eq answer.id
-        end
-      end
-    end
-
-    context "with invalid attributes" do
-      it "assigns related Answer to @question" do
-        patch :mark_best_answer, id: question, answer_id: nil, format: :js
-        expect(question.best_answer).to be_nil
-      end
-    end
-  end
+  #  context "with invalid attributes" do
+  #    it "assigns related Answer to @question" do
+  #      patch :mark_best_answer, id: question, answer_id: nil, format: :js
+  #      expect(question.best_answer).to be_nil
+  #    end
+  #  end
+  #end
 end

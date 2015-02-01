@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   respond_to :js, only: :update
 
   authorize_resource
+  #load_and_authorize_resource
 
   def index
     respond_with(@questions = Question.all)

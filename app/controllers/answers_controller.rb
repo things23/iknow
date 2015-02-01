@@ -5,9 +5,10 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: :create
 
   respond_to :json, only: [:update, :create]
-  respond_to :js
+  respond_to :js, except: :mark_best_answer
 
   authorize_resource
+  #load_and_authorize_resource
 
   def create
     respond_with(@answer = @question.answers.create(answers_params.merge(user: current_user)))
@@ -22,7 +23,15 @@ class AnswersController < ApplicationController
     respond_with(@answer.destroy)
   end
 
+  def mark_best_answer
+    #@answers = current_user.question_answers
+    @answer = current_user.question_answers.find(params[:id])
+    @question = @answer.question
+    @answer.set_best
+  end
+
   private
+
   def publish_answer
     pub_json = render_to_string(template: "answers/create.json.jbuilder", locals: {answer: @abswer})
     PrivatePub.publish_to("/questions/#{@question.id}/answers",

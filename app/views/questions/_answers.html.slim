@@ -19,12 +19,12 @@ h4 Answers
         div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: answer.class.to_s.downcase, commentable_id: answer.id }
       p
       /todo: проверка прав через cancan
-      - unless @question.best_answer
-        -if can? :mark_best_answer, @question
-          = link_to "Accept answer", mark_best_answer_question_path(answer_id: answer.id), class: "mark-best", method: :patch, remote: true
+      /- unless answer.best_answer
+      - if can? :mark_best_answer, answer
+        = link_to "Accept answer",  mark_best_answer_answer_path(answer), class: "mark-best", method: :patch, remote: true
       div id= "comments-answer-#{answer.id}"
         =render "comments/comments", commentable: answer, comments: answer.comments
-      -if @question.best_answer && @question.best_answer == answer.id
+      -if answer.best_answer
         .marked-best
 
 

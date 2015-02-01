@@ -5,9 +5,9 @@ feature "Mark answer as best", %q{
   As an author of the question
   I want to be able to choose best answer
 } do
-  given(:user) { create(:user) }
-  given(:another_user) { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given!(:user) { create(:user) }
+  given!(:another_user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question) }
 
   describe "Author of question" do
@@ -18,6 +18,7 @@ feature "Mark answer as best", %q{
 
     scenario "sees link to accept answer" do
       within ".answer" do
+        #save_and_open_page
         expect(page).to have_link "Accept answer"
       end
     end

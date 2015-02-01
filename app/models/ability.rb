@@ -19,12 +19,17 @@ class Ability
 
   def admin_abilities
      can :manage, :all
+     cannot :mark_best_answer, Answer do |answer|
+      answer.question.user != user
+    end
   end
 
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment]
     can [:update,:destroy], [Question, Answer, Comment], user: user
-    can :mark_best_answer, Question, user: user
+    can :mark_best_answer, Answer do |answer|
+      answer.question.user == user
+    end
   end
 end

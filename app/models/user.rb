@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :attachments
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
+  has_many :question_answers, through: :questions, source: :answers
   has_many :authorizations
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
