@@ -1,0 +1,7 @@
+DailyMailer#digest
+
+= @user.email + ", Your Daily Question Digest From Iknow.com"
+
+= @questions.each do |question|
+  = link_to "#{question.title}" , question_url(question)
+    = question.body

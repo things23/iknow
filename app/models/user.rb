@@ -28,6 +28,17 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.send_daily_digest
+    find_each.each do |user|
+      DailyMailer.delay.digest(user)
+    end
+  end
+
+  def send_notification_about_answer(answer)
+    UserMailer.delay.question_answered(self, answer)
+  end
+
+
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end

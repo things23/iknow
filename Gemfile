@@ -26,6 +26,11 @@ gem 'doorkeeper', '~> 2.1.0'
 gem 'active_model_serializers', '~> 0.9.3'
 gem 'oj', '~> 2.11.4'
 gem 'oj_mimic_json', '~> 1.0.1'
+gem 'whenever', '~> 0.9.4'
+gem 'sidekiq', '~> 3.3.1'
+gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidetiq', '~> 0.6.3'
+gem 'redis-throttle', git: 'git://github.com/andreareginato/redis-throttle.git'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 

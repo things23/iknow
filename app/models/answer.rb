@@ -7,6 +7,8 @@ class Answer < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments
 
+  after_create :send_notification
+
   def set_best
     @id = self.question_id
     question = Question.where(id: @id).first
@@ -18,5 +20,9 @@ class Answer < ActiveRecord::Base
     end
 
     update_columns(best_answer: true)
+  end
+
+  def send_notification
+    NewAnswerWorker.perform_async(id)
   end
 end

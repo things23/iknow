@@ -1,0 +1,5 @@
+h1= @user.email + ", Your Daily Question Digest From Iknow.com"
+
+- @questions.each do |question|
+  h4= link_to "#{question.title}" , question_url(question)
+  p= question.body

@@ -7,4 +7,6 @@ class Question < ActiveRecord::Base
   validates :title, :body, :user_id, presence: true
 
   accepts_nested_attributes_for :attachments
+
+  scope :asked_today, -> { where("created_at >= ?", Time.zone.now.beginning_of_day) }
 end

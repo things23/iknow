@@ -21,6 +21,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
+    #UserMailer.welcome_email(current_user, @question).deliver
     respond_with(@question = current_user.questions.create(questions_params))
   end
 

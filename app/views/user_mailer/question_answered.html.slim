@@ -1,0 +1,6 @@
+h1= @user.email + ", You have new answer to your question"
+
+p= @answer.body
+
+p= link_to "Check your question", question_url(@answer.question)
+

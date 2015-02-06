@@ -67,4 +67,23 @@ RSpec.describe User, :type => :model do
       end
     end
   end
+
+  describe '.send_daily_digest' do
+    let(:users) { create_list(:user, 2) }
+
+    it "should send daily digest to all users" do
+      users.each { |user| expect(DailyMailer).to receive(:digest).with(user).and_call_original }
+      User.send_daily_digest
+    end
+  end
+
+  describe '.send_notification_about_answer' do
+    let!(:user) { create(:user) }
+    let!(:question) { create(:question) }
+    let!(:answer) { create(:answer, user: user) }
+    it "should send daily digest to all users" do
+      expect(UserMailer).to receive(:question_answered).with(user, answer).and_call_original
+      user.send_notification_about_answer(answer)
+    end
+  end
 end
