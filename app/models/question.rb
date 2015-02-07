@@ -16,13 +16,6 @@ class Question < ActiveRecord::Base
   end
 
   def subscriber?(user)
-   #subscribers.each do |subscriber|
-   #   if subscriber == user
-   #     return true
-   #   else
-   #     false
-   #   end
-   # end
    subscribers.exists? user
   end
 end
