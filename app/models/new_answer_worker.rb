@@ -6,9 +6,14 @@ class NewAnswerWorker
     #question = Question.find(question_id)
     #answer = question.answers.find(answer_id)
     answer = Answer.find(answer_id)
-    user = answer.question.user
+    question = answer.question
+    user = question.user
+    subscribers = question.subscribers
+    subscribers << user
 
-    #user.send_notification_about_answer(question, answer)
-    user.send_notification_about_answer(answer)
+    #user.send_notification_about_answer(answer)
+    subscribers.each do |subscriber|
+      subscriber.send_notification_about_answer(answer)
+    end
   end
 end
