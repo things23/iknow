@@ -24,7 +24,6 @@ class AnswersController < ApplicationController
   end
 
   def mark_best_answer
-    #@answers = current_user.question_answers
     @answer = current_user.question_answers.find(params[:id])
     @question = @answer.question
     @answer.set_best

@@ -26,6 +26,7 @@ class Ability
 
   def user_abilities
     guest_abilities
+    can :subscribe, Question
     can :create, [Question, Answer, Comment]
     can [:update,:destroy], [Question, Answer, Comment], user: user
     can :mark_best_answer, Answer do |answer|

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   has_many :question_answers, through: :questions, source: :answers
   has_many :authorizations
+  has_and_belongs_to_many :subscriptions, class_name: 'Question', join_table: :subscriptions
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
@@ -29,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def self.send_daily_digest
-    find_each.each do |user|
+    find_each do |user|
       DailyMailer.delay.digest(user)
     end
   end
@@ -37,7 +38,6 @@ class User < ActiveRecord::Base
   def send_notification_about_answer(answer)
     UserMailer.delay.question_answered(self, answer)
   end
-
 
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)

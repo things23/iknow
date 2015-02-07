@@ -5,6 +5,7 @@ RSpec.describe User, :type => :model do
   it { should have_many :answers }
   it { should have_many :comments }
   it { should have_many :attachments }
+  it { should have_and_belong_to_many :subscriptions }
   it { should have_many(:question_answers).through(:questions).source(:answers) }
 
   describe ".find_for_oauth" do

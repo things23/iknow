@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :answers, except: [:index, :new, :edit], concerns: :commentable do
       patch :mark_best_answer, on: :member
     end
+    patch :subscribe, on: :member
   end
 
   resources :users, only: [:index, :show]

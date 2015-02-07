@@ -1,5 +1,6 @@
 div.question id="question-#{@question.id}"
   = render "questions"
+
   div id= "comments-question-#{@question.id}"
     = render "comments/comments", commentable: @question, comments: @question.comments
   - if can?(:create, Comment)

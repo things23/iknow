@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:update, :destroy, :mark_best_answer]
+  before_action :load_question, only: [:update, :destroy]
   before_action :build_answer, only: :show
 
-  respond_to :js, only: :update
+  respond_to :js, only: [:update, :subscribe]
 
   authorize_resource
   #load_and_authorize_resource
@@ -21,7 +21,6 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    #UserMailer.welcome_email(current_user, @question).deliver
     respond_with(@question = current_user.questions.create(questions_params))
   end
 
@@ -34,11 +33,9 @@ class QuestionsController < ApplicationController
     respond_with(@question.destroy)
   end
 
-  def mark_best_answer
-    unless @question.best_answer
-      @best = params[:answer_id]
-      @question.set_best(@best)
-    end
+  def subscribe
+    @question = Question.find(params[:id])
+    @question.subscribe(current_user)
   end
 
   private

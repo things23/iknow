@@ -1,0 +1,10 @@
+$('.question').html('<%= j render 'questions/questions' %>');
+$('.subscribe').on("click", function(event){
+  event.preventDefault();
+  $(this).hide();
+  $('.question').append('.subscribed')
+});
+/*$('.subscribe').click(function(event) {
+  event.preventDefault();
+  var subscribed_question = $(this).parent();
+  $('.question').append('.subscribed');*/

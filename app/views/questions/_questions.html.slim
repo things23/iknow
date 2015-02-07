@@ -1,3 +1,5 @@
+-if @question.subscriber?(current_user)
+  .subscribed
 h3= @question.title
 p= @question.body
 p Attachments
@@ -5,6 +7,9 @@ ul
   - @question.attachments.each do |a|
     li= link_to a.file.identifier, a.file.url
 ul class = "pull-right"
+  -if can? :subscribe, @question
+    li
+      = link_to "subscribe", subscribe_question_path(@question), class: "subscribe", method: :patch, remote: true
   -if can? :edit, @question
     li
       = link_to "Edit", "", class: "edit-question-link"

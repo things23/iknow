@@ -124,13 +124,16 @@ describe QuestionsController do
     end
   end
 
+  describe "PATCH #subscribe" do
+  let(:user) { create(:user) }
+    it "should call subscribe method on question with user" do
+      expect(question).to receive(:subscribe).with(user)
+      question.subscribe(user)
+    end
 
-
-  #  context "with invalid attributes" do
-  #    it "assigns related Answer to @question" do
-  #      patch :mark_best_answer, id: question, answer_id: nil, format: :js
-  #      expect(question.best_answer).to be_nil
-  #    end
-  #  end
-  #end
+    it "render subscribe template" do
+      patch :subscribe, id: question, format: :js
+      expect(response).to render_template :subscribe
+    end
+  end
 end
