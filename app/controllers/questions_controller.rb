@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
 
   def index
     respond_with(@questions = Question.all)
+    #respond_with(@questions = Question.search(params[:search]))
   end
 
   def show

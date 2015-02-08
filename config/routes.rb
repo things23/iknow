@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks'}
   root "questions#index"
 
+  get :search, to: 'search#index'
+
   concern :commentable do
     resources :comments, except: [:index, :show]
   end
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:index, :show]
+
 
   namespace :api do
     namespace :v1 do

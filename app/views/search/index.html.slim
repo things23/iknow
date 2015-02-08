@@ -1,0 +1,17 @@
+div class="container-fluid"
+      div class="row"
+        div class="col-xs-4"
+          = form_tag search_path, role: 'search', method: :get do
+            div class="form-group"
+              = text_field_tag :search, params[:search], class: "form-control"
+              = select_tag 'type', options_for_select(["Questions", "Answers", "Comments"] , params[:type]), class: 'form-control', include_blank: 'all'
+            = submit_tag 'Search', name: nil, class: "btn btn-default"
+        div class="col-xs-8"
+          - if @results.present?
+            - @results.each do|result|
+              -if result.is_a? Question
+                .question
+                  = link_to "#{result.title}" , result
+                  p= result.body
+              -else
+                p= result.body
