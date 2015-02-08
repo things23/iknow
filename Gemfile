@@ -31,6 +31,9 @@ gem 'sidekiq', '~> 3.3.1'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'sidetiq', '~> 0.6.3'
 gem 'redis-throttle', git: 'git://github.com/andreareginato/redis-throttle.git'
+
+gem 'mysql2'
+gem 'thinking-sphinx', '~> 3.1.3'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
