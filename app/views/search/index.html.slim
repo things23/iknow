@@ -4,7 +4,8 @@ div class="container-fluid"
           = form_tag search_path, role: 'search', method: :get do
             div class="form-group"
               = text_field_tag :search, params[:search], class: "form-control"
-              = select_tag 'type', options_for_select(["Questions", "Answers", "Comments"] , params[:type]), class: 'form-control', include_blank: 'all'
+              = select_tag 'type', options_for_select(["Questions", "Answers", "Comments", "Users"] , params[:type]), class: 'form-control', include_blank: 'all'
+              = select_tag 'sort', options_for_select(["New to Old", "Old to new"] , params[:sort]), class: 'form-control'
             = submit_tag 'Search', name: nil, class: "btn btn-default"
         div class="col-xs-8"
           - if @results.present?
@@ -13,5 +14,9 @@ div class="container-fluid"
                 .question
                   = link_to "#{result.title}" , result
                   p= result.body
+              -elsif result.is_a? User
+                p=result.email
               -else
-                p= result.body
+                .question
+                  p= linkt_to "#{result.question.title}"
+                  p= result.body
