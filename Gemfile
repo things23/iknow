@@ -36,6 +36,8 @@ gem 'mysql2'
 gem 'thinking-sphinx', '~> 3.1.3'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
+gem 'dotenv', '~> 1.0.2'
+gem 'dotenv-deployment', '~> 0.2.0', require: 'dotenv/deployment'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
@@ -51,15 +53,19 @@ group :test do
   gem 'json_spec', '~> 1.1.4'
 end
 
+group :development do
+  gem 'capistrano', '~> 3.3.5', require: false
+  gem 'capistrano-bundler', '~> 1.1.4', require: false
+  gem 'capistrano-rails', '~> 1.1.2', require: false
+  gem 'capistrano-rvm', '~> 0.1.2', require: false
+end
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]

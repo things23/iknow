@@ -13,9 +13,10 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/development.sphinx.pid
 /tmp
 /config/database.yml
-config/private_pub.yml
+/config/private_pub.yml
 /public/uploads/
 config/*.sphinx.conf
 db/sphinx
