@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :question do
     title "MyQuestion"
     body "Body of my question"
-    association :user
+    user
 
     factory :invalid_question, class: "Question" do
       title nil

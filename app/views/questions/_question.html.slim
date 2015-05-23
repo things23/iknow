@@ -1,6 +1,7 @@
 -if @question.subscriber?(current_user)
   .subscribed
 h3= @question.title
+p= @question.user.email
 p= @question.body
 p Attachments
 ul

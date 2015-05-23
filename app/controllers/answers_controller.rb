@@ -2,13 +2,13 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
   before_action :load_answer, only: [:update, :destroy]
-  after_action :publish_answer, only: :create
+
+  after_action :publish_answer, only: [:create, :update]
 
   respond_to :json, only: [:update, :create]
   respond_to :js, except: :mark_best_answer
 
   authorize_resource
-  #load_and_authorize_resource
 
   def create
     respond_with(@answer = @question.answers.create(answers_params.merge(user: current_user)))
@@ -20,7 +20,8 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    respond_with(@answer.destroy)
+    @answer.destroy
+    respond_with @answer
   end
 
   def mark_best_answer
@@ -32,7 +33,7 @@ class AnswersController < ApplicationController
   private
 
   def publish_answer
-    pub_json = render_to_string(template: "answers/create.json.jbuilder", locals: {answer: @abswer})
+    pub_json = render_to_string(template: "answers/create.json.jbuilder", locals: {answer: @answer})
     PrivatePub.publish_to("/questions/#{@question.id}/answers",
      answer: pub_json) if @answer.valid?
   end

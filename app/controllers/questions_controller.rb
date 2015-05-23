@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:update, :destroy]
+  before_action :load_question, only: [:update, :destroy, :subscribe]
   before_action :build_answer, only: :show
 
   respond_to :js, only: [:update, :subscribe]
@@ -35,7 +35,6 @@ class QuestionsController < ApplicationController
   end
 
   def subscribe
-    @question = Question.find(params[:id])
     @question.subscribe(current_user)
   end
 
@@ -47,7 +46,12 @@ class QuestionsController < ApplicationController
   end
 
   def load_question
-    @question = current_user.questions.find(params[:id])
+    #@question = Question.find(params[:id])
+    if current_user.admin?
+      @question = Question.find(params[:id])
+    else
+      @question = current_user.questions.find(params[:id])
+    end
   end
 
   def questions_params

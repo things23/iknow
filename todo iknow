@@ -1,0 +1,21 @@
+-разобраться с delegate!
+- добавить data: { type: :json } в ветке add-comments
+
+доделать создание ответа, а именно рендеринг js файла с ошибками
+
+ошибка при удалении
+ Uncaught TypeError: Cannot read property 'answer' of undefined
+  (anonymous function)
+  self.handleResponse
+  s
+  t.emit
+  Faye.extend.Set.Faye.Class.distributeMessage
+  Faye.Client.Faye.Class._deliverMessage
+  (anonymous function)
+  o
+  o
+  Faye.Extensible.pipeThroughExtensions
+  Faye.Client.Faye.Class.receiveMessage
+  Faye.Transport.Faye.extend.Faye.Class.receive
+  e.onmessage
+

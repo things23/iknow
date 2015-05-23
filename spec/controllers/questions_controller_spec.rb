@@ -90,7 +90,9 @@ describe QuestionsController do
       sign_in_another_user
 
       it "raises an error" do
-        expect { patch :update, id: question, question: {title: "new title", body: "new body" }, format: :js }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          patch :update, id: question, question: {title: "new title", body: "new body" }, format: :js
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 

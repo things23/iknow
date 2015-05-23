@@ -3,7 +3,7 @@
         $('.question-errors').html('<%= j message %>');
     <% end %>
 <% else %>
-  $(".question").html('<%= j render 'questions/questions' %>');
+  $(".question").html('<%= j render 'questions/question' %>');
   $(".edit-question-link").on("click", function(event){
     event.preventDefault();
     $(this).hide();

@@ -4,7 +4,7 @@ describe 'Answers API' do
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answers) { create_list(:answer, 2, question: question, user: user) }
-  let(:answer) { answers.first }
+  let(:answer) { answers.last }
   let!(:comment) { create(:comment, commentable: answer, user: user) }
   let!(:attachment) { create :attachment, attachmentable: answer, user: user }
 

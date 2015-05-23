@@ -6,7 +6,8 @@ feature "Delete answer", %q{
   I want to be able to delete my answer
 } do
   given(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given(:question) { create(:question, user: user) }
+  #given(:another_answer) { create :answer, question: question, user: user }
   given!(:answer) { create(:answer, user: user, question: question) }
 
 
@@ -15,9 +16,9 @@ feature "Delete answer", %q{
     visit question_path(question)
   end
 
-  scenario "Authenticated user delete question", json: true do
+  scenario "Authenticated user delete question", js: true do
     within ".delete-edit-nav" do
-      click_on "Delete"
+      click_on "Delete Answer"
       expect(page).to_not have_content "MyText"
     end
   end

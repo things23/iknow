@@ -18,7 +18,6 @@ feature "Mark answer as best", %q{
 
     scenario "sees link to accept answer" do
       within ".answer" do
-        #save_and_open_page
         expect(page).to have_link "Accept answer"
       end
     end

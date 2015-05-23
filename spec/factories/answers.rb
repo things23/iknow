@@ -2,8 +2,8 @@ FactoryGirl.define do
   factory :answer do
     body "MyText"
     best_answer false
-    association :question
-
+    question
+    user
     factory :invalid_answer, class: "Answer" do
       body nil
     end

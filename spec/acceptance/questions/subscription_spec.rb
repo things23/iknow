@@ -20,7 +20,7 @@ feature "Subscribe to question", %q{
       end
     end
 
-    scenario "add comment to the  question", js: true do
+    scenario "subscribe to question", js: true do
       within ".question" do
         click_on "subscribe"
         expect(page).to have_css('.subscribed')
@@ -28,7 +28,7 @@ feature "Subscribe to question", %q{
     end
   end
 
-  scenario "Non-athenticated user try to add comment to the question" do
+  scenario "Non-athenticated user try to subscribe to question" do
     visit question_path(question)
 
     within ".question" do

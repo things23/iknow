@@ -7,7 +7,7 @@ feature "Edit answer", %q{
 } do
   given(:user) { create(:user) }
   given(:another_user) { create(:user)}
-  given(:question) { create(:question, user_id: user.id) }
+  given(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question) }
 
   describe "Authenticated user" do

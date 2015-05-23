@@ -24,11 +24,13 @@ $ ->
 
   questionId = $('.answers').data('questionId')
   PrivatePub.subscribe '/questions/'+questionId+'/answers', (data, channel) ->
-    console.log(data)
-    answer = $.parseJSON(data['answer'])
-    template = HandlebarsTemplates['answers/answer'](answer)
-    $('.answers').append(template)
-    $("form#new_answer").find('#answer_body').val("")
+    if data == undefined
+      console.log("No data")
+    else
+      answer = $.parseJSON(data['answer'])
+      template = HandlebarsTemplates['answers/answer'](answer)
+      $('.answers').append(template)
+      $("form#new_answer").find('#answer_body').val("")
 
   #$("#new_answer").bind 'ajax:success', (e, data, status, xhr) ->
   #  answer = $.parseJSON(xhr.responseText)
