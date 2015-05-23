@@ -1,5 +1,7 @@
 .container
   .questions-list
     - @questions.each do|question|
-      .question
-        = link_to "#{question.title}" , question
+      .question-prev
+        h3= link_to "#{question.title}" , question
+        p= question.body.truncate(200)
+        span= "Asked by #{question.user.email}"

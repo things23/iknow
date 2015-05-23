@@ -14,6 +14,12 @@ html {
 }
 body {
   padding-top: 60px;
+  span {
+    font: 14px italic;
+  }
+  h3 {
+      font-size: 24px;
+    }
 }
 
 section {
@@ -69,12 +75,19 @@ input {
   margin-top: 5px;
   width: 900px;
   margin: 0 auto;
+  .question-prev {
+    padding: 10px;
+    border-bottom: 1px solid #A9A9A9;
+  }
 }
 .question {
   width: 900px;
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding: 15px 0;
   border-bottom: 1px solid #A9A9A9;
+  .text {
+    margin-top: 15px;
+  }
   ul {
     li {
       margin-right: 15px;
@@ -88,21 +101,31 @@ input {
 /* answers */
 .answers {
   width: 900px;
-  border-bottom: 1px solid #A9A9A9;
-  margin: 0 auto;
+  margin: 30px auto;
+  h4 {
+    margin-bottom: 25px;
+  }
   .edit_answer { display: none }
-}
-.answer {
-  background-color: #FFFFF0;
-;
-  margin-bottom: 25px;
-  ul {
-    li {
-      margin-right: 15px;
-      display: inline;
-      list-style-type: none;
+  .answer {
+    background-color: #FFFFF0;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #A9A9A9;
+    ul {
+      li {
+        margin-right: 15px;
+        display: inline;
+        list-style-type: none;
+      }
     }
   }
+}
+
+.comments {
+  p {
+    font-size: 14px;
+  }
+  margin: 20px 20px 10px;
 }
 
 .marked-best:before {

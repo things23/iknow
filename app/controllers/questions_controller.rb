@@ -6,11 +6,10 @@ class QuestionsController < ApplicationController
   respond_to :js, only: [:update, :subscribe]
 
   authorize_resource
-  #load_and_authorize_resource
 
   def index
-    respond_with(@questions = Question.all)
-    #respond_with(@questions = Question.search(params[:search]))
+    @questions = Question.all.includes(:user)
+    respond_with @questions
   end
 
   def show

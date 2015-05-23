@@ -1,12 +1,13 @@
 -if @question.subscriber?(current_user)
   .subscribed
 h3= @question.title
-p= @question.user.email
-p= @question.body
-p Attachments
-ul
-  - @question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
+span= @question.user.email
+p.text= @question.body
+-if @question.attachments.any?
+  p Attachments
+  ul
+    - @question.attachments.each do |a|
+      li= link_to a.file.identifier, a.file.url
 ul class = "pull-right"
   -if can? :subscribe, @question
     li
@@ -17,10 +18,10 @@ ul class = "pull-right"
   -if can? :destroy, @question
     li
       = link_to "Delete", @question, method: :delete, data: { confirm: 'Are you sure?'}
-  = form_for @question, remote: true do |f|
-    .question-errors
-    = f.label :title
-    = f.text_field :title
-    = f.label :body
-    = f.text_area :body
-    = f.submit "Save changes", class: "btn btn-primary"
+= form_for @question, remote: true do |f|
+  .question-errors
+  = f.label :title
+  = f.text_field :title
+  = f.label :body
+  = f.text_area :body
+  = f.submit "Save changes", class: "btn btn-primary"

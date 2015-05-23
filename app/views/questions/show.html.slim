@@ -1,24 +1,18 @@
-div.question id="question-#{@question.id}"
+.question id="question-#{@question.id}"
   = render "question"
 
-  div id= "comments-question-#{@question.id}"
+  .comments id= "comments-question-#{@question.id}"
     = render "comments/comments", commentable: @question, comments: @question.comments
   - if can?(:create, Comment)
       div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase, commentable_id: @question.id }
 
-- if @question.answers.any?
-  .answers data={question_id: "#{@question.id}"}
-    = render "answers/answers"
+.answers data={question_id: "#{@question.id}"}
+  - if @question.answers.any?
+    = render "answers/answers", answers: @question.answers
 
   - if can?(:create, Answer)
-    = form_for [@question, @answer], remote: true do |f|
-      = f.label :body, "Your Answer"
-      .answer-errors
-      = f.text_area :body
-      = f.fields_for :attachments, @answer.attachments.build do |a|
-        = a.label :file
-        = a.file_field :file
-      = f.submit "Post Your Answer"
+    = render "answers/form", question: @question, answer: @answer
+
 = subscribe_to "/questions/#{@question.id}/answers"
 
 

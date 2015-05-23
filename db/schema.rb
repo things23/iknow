@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150207175512) do
+ActiveRecord::Schema.define(version: 20150206155238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,17 +111,6 @@ ActiveRecord::Schema.define(version: 20150207175512) do
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
-
-  create_table "reputations", force: true do |t|
-    t.integer  "user_id"
-    t.string   "reputatable_type"
-    t.integer  "reputatable_id"
-    t.integer  "rating"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reputations", ["user_id"], name: "index_reputations_on_user_id", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer  "question_id"
