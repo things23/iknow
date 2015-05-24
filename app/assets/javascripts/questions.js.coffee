@@ -10,6 +10,7 @@ $ ->
     commentable_id = comment_link.data('commentableId')
     commentable = comment_link.data('commentable')
     comment_link.hide()
+    comment_link.closest(".#{commentable}").find(".new_comment").remove()
     template = HandlebarsTemplates['comments/comment']({commentable: commentable, id: commentable_id})
     $("##{commentable}-#{commentable_id}").append(template)
     $("#add-comment-#{commentable}-#{commentable_id}").bind 'ajax:success', (e, data, status, xhr) ->

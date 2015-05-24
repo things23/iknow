@@ -5,10 +5,10 @@
     = render "comments/comments", commentable: @question, comments: @question.comments
   - if can?(:create, Comment)
       div= link_to "add a comment", "", class: "add_comment_link", data: { commentable: @question.class.to_s.downcase, commentable_id: @question.id }
-
-.answers data={question_id: "#{@question.id}"}
-  - if @question.answers.any?
-    = render "answers"
+.answers-box
+  .answers data={question_id: "#{@question.id}"}
+    - if @question.answers.any?
+      = render "answers"
 
   - if can?(:create, Answer)
     = render "answers/form", question: @question, answer: @answer

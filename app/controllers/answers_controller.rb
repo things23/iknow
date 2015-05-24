@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
   before_action :load_answer, only: [:update, :destroy]
 
-  after_action :publish_answer, only: [:create, :update]
+  after_action :publish_answer, only: :create
 
   respond_to :json, only: [:update, :create]
   respond_to :js, except: :mark_best_answer
