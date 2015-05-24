@@ -33,6 +33,12 @@ RSpec.describe Answer, :type => :model do
       it "sets attribute best_answer for related answer to be true" do
         expect { answer.set_best }.to change { answer.best_answer }.to be true
       end
+
+      it "sets attribute resolved for related question" do
+        answer.set_best
+        question.reload
+        expect(question).to be_resolved
+      end
     end
   end
 end

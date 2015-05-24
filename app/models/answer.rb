@@ -10,16 +10,13 @@ class Answer < ActiveRecord::Base
   after_create :send_notification
 
   def set_best
-    @id = self.question_id
-    question = Question.where(id: @id).first
-    #existed_best = Answer.where(question_id: question.id, best_answer: true).first
-    existed_best = question.answers.find_by(best_answer: true)
-
-    if existed_best
-      existed_best.update_attributes(best_answer: false)
+    question = Question.find(question_id)
+    old_best = question.answers.find_by(best_answer: true)
+    transaction do
+      old_best.update!(best_answer:false) if old_best
+      update!(best_answer: true)
+      question.update!(resolved: true) unless question.resolved
     end
-
-    update_columns(best_answer: true)
   end
 
   def send_notification
