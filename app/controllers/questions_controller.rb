@@ -40,12 +40,11 @@ class QuestionsController < ApplicationController
   private
 
   def build_answer
-    @question = Question.find(params[:id])
+    @question = Question.includes(:user, answers: [:user, :attachments, :comments]).find(params[:id])
     @answer = @question.answers.build
   end
 
   def load_question
-    #@question = Question.find(params[:id])
     if current_user.admin?
       @question = Question.find(params[:id])
     else

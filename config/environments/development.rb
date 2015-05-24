@@ -53,4 +53,10 @@ Rails.application.configure do
   #config.action_mailer.perform_deliveries = true
   #config.action_mailer.raise_delivery_errors = true
   #config.action_mailer.default_options = {from: 'no-reply@iknow.com'}
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+  end
 end
