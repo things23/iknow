@@ -8,7 +8,7 @@
 
 .answers data={question_id: "#{@question.id}"}
   - if @question.answers.any?
-    = render "answers/answers", answers: @question.answers
+    = render "answers"
 
   - if can?(:create, Answer)
     = render "answers/form", question: @question, answer: @answer

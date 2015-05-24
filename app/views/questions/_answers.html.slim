@@ -1,5 +1,5 @@
 h3 Answers
-- answers.each do |answer|
+- @question.answers.each do |answer|
   - if answer.persisted?
     div.answer id="answer-#{answer.id}"
       =render "answers/answer", answer: answer

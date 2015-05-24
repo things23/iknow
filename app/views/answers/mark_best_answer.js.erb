@@ -1,8 +1,7 @@
-$('.answers').html('<%= j render 'answers/answers' %>');
+$('.answers').html('<%= j render 'questions/answers' %>');
 $('.mark-best').click(function(event) {
   event.preventDefault();
   var best_answer = $(this).parent();
   best_answer.append('.marked-best');
   console.log(best_answer)
-  /*todo: think about links and views in general */
 });
