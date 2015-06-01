@@ -3,16 +3,12 @@ lock '3.3.5'
 
 set :application, 'iknow'
 set :repo_url, 'git@github.com:things23/iknow.git'
-
-# Default branch is :master
-# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/home/deployer/iknow'
 set :deploy_user, 'deployer'
 
-set :linked_files, %w{config/database.yml config/private_pub.yml config/private_pub_thin.yml .env}
-#set :linked_files, fetch(:linked_files, []).push('config/database.yml config/private_pub.yml')
+#set :linked_files, %w{config/database.yml config/private_pub.yml config/private_pub_thin.yml .env}
+set :linked_files, fetch(:linked_files, []).push('config/database.yml config/private_pub.yml .env')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('bin', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
